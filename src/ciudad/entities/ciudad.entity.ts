@@ -14,7 +14,6 @@ export class Ciudad{
 
     @Column({
         type:'tinyint',
-        length:2.,
         default: 0
     })
     id_region: number;

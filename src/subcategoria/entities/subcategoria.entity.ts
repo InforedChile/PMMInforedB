@@ -1,6 +1,8 @@
-import { Entity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity('tbl_publico_cate_sub')
 export class Subcategoria{
+    @PrimaryGeneratedColumn()
+    id_publico_cate_sub: number;
 
 }

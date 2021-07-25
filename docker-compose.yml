@@ -5,11 +5,14 @@ services:
         command: mysqld --user=root
         volumes:
         - ./mysql-dump:/docker-entrypoint-initdb.d
+        restart: always
+        ports:
+        - 3306:3306
         environment:
-            MYSQL_DATABASE: infored_test
-            MYSQL_USER: inforedUser
-            MYSQL_PASSWORD: inforedPSW
-            MYSQL_ROOT_PASSWORD: rootPSW
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: myblog_db
+            MYSQL_USER: myblog_user
+            MYSQL_PASSWORD: myblog_password
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         ports:
