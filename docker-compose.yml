@@ -10,9 +10,9 @@ services:
         - 3306:3306
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: myblog_db
-            MYSQL_USER: myblog_user
-            MYSQL_PASSWORD: myblog_password
+            MYSQL_DATABASE: infored_db
+            MYSQL_USER: infored_user
+            MYSQL_PASSWORD: infored_password
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         ports:

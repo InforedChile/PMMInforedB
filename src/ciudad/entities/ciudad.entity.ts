@@ -1,4 +1,4 @@
-import { ST } from "src/enums/st.enum";
+import { ST } from "src/enums";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tbl_ciudad')
@@ -8,7 +8,8 @@ export class Ciudad{
 
     @Column({ 
         type:'tinytext',
-        default: null
+        default: null,
+        collation:'utf8_general_ci'
     })
     nombre_ciudad: string;
 
@@ -21,7 +22,8 @@ export class Ciudad{
     @Column({
         type:'enum',
         enum: ST,
-        default: ST.ACTIVO
+        default: ST.ACTIVO,
+        collation:'utf8_general_ci'
     })
     st_ciudad: ST;
 }

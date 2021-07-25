@@ -1,4 +1,4 @@
-import { ST } from "src/enums/st.enum";
+import { ST } from "src/enums";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tbl_publico_cate')
@@ -22,6 +22,12 @@ export class Categoria{
         
     })
     imagen: string;
+
+    @Column({
+        type:'int',
+        nullable: false
+    })
+    orden: number;
 
     @Column({
         type:'enum',
