@@ -142,7 +142,8 @@ export class Institucion{
         name: 'celu_aviso',
         type: 'varchar',
         length: 100,
-        collation: 'latin1_swedish_ci'
+        collation: 'latin1_swedish_ci',
+        default:''
     })
     telefono2: string;
 
@@ -159,7 +160,8 @@ export class Institucion{
         name: 'email_aviso_2',
         type: 'varchar',
         length: 50,
-        collation: 'latin1_swedish_ci'
+        collation: 'latin1_swedish_ci',
+        default:''
     })
     email2: string;
 
