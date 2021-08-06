@@ -1,19 +1,16 @@
-import { IsDate, IsEmail, IsEnum, IsInt, IsString, MaxLength, Min } from "class-validator";
+import { IsDate, IsEmail, IsEnum, IsInt, IsNumber, IsString, MaxLength, Min } from "class-validator";
 import { BOOL, ST } from "src/enums";
 ;
 
 export class CreateDTO{
-    @IsInt()
+    @IsNumber()
     id_usuario: number;
 
-    @IsInt()
+    @IsNumber()
     id_publico_cate_sub: number;
 
-    @IsInt()
+    @IsNumber()
     id_ciudad: number;
-
-    @IsDate()
-    fecha_crea: Date;
 
     @IsString()
     @MaxLength(300)
@@ -35,11 +32,11 @@ export class CreateDTO{
     resumen: string;
 
 
-    @IsInt()
+    @IsNumber()
     @Min(0)
     precio1: number;
 
-    @IsInt()
+    @IsNumber()
     @Min(0)
     precio2: number;
 
@@ -66,11 +63,11 @@ export class CreateDTO{
     @IsString()
     @MaxLength(100)
     telefono2: string;
-
-    @IsEmail()
+// ver validacion email
+    @IsString()
     email1: string;
 
-    @IsEmail()
+    @IsString()
     email2: string;
 
     @IsString()
@@ -83,9 +80,6 @@ export class CreateDTO{
     @IsEnum(BOOL)
     destacar: BOOL;
 
-    @IsDate()
-    fecha_destacado: Date;
-
     @IsString()
     @MaxLength(200)
     twitter: string;
@@ -97,13 +91,13 @@ export class CreateDTO{
     @IsEnum(ST)
     st_institucion: ST;
 
-    @IsEnum(ST)
+    @IsNumber()
     id_organizacion: number;
 
-    @IsInt()
+    @IsNumber()
     id_plantilla: number;
 
-    @IsInt()
+    @IsNumber()
     @Min(0)
     errores: number;
 

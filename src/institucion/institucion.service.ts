@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateDTO } from './dto';
 import { Institucion } from './entities';
 
 @Injectable()
@@ -21,7 +22,12 @@ export class InstitucionService {
 
     async getBy(){}
 
-    async createOne(){}
+    async createOne(dto: CreateDTO){
+        const newInstitucion =await  this.institucionRepository.create(dto)
+        newInstitucion.fecha_crea=new Date();
+        const institucion= await this.institucionRepository.save(newInstitucion)
+        return newInstitucion
+    }
 
     async editOne(){}
 

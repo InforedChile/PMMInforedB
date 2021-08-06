@@ -27,7 +27,10 @@ export class InstitucionController {
 
     @Post()
     async createOne(@Body() dto: CreateDTO){
-
+        const data = await this.institucionService.createOne(dto)
+        return{
+            data 
+        }
     }
 
 }

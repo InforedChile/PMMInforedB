@@ -187,7 +187,8 @@ export class Institucion{
     destacar: BOOL;
 
     @Column({
-        type: 'date'
+        type: 'date',
+        default: null,
     })
     fecha_destacado: Date;
 
