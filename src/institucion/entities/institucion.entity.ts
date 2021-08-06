@@ -22,6 +22,13 @@ export class Institucion{
     id_publico_cate_sub: number;
 
     @Column({
+        type: 'int',
+        nullable: false,
+    
+    })
+    id_ciudad: number;
+
+    @Column({
         type:'datetime',
         nullable: false
     })
@@ -207,6 +214,24 @@ export class Institucion{
         nullable:false       
     })
     st_institucion: ST;
+
+    @Column({
+        type: 'int',
+        nullable: true,
+    })
+    id_organizacion: number;
+
+    @Column({
+        type: 'int',
+        nullable: true,
+    })
+    id_plantilla: number;
+
+    @Column({
+        type: 'int',
+        default:0
+    })
+    errores: number;
 
 
 }
