@@ -1,7 +1,10 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { CreateDTO } from './dto';
+import { ApiCreatedResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CreateInstitucionDTO } from './dto';
+import { Institucion } from './entities';
 import { InstitucionService } from './institucion.service';
 
+@ApiTags('Institucion')
 @Controller('inst')
 export class InstitucionController {
     constructor(
@@ -10,27 +13,24 @@ export class InstitucionController {
 
     @Get()
     async getMany(){
-        const data = await this.institucionService.getMany()
-        return {
-            data
-        }
-
+        return await this.institucionService.getMany()
     }
 
-    @Get(':id')
+    @Get('ver/:id')
     async getOne(@Param('id',ParseIntPipe) idInst:number){
-        const data = await this.institucionService.getOne(idInst)
-        return{
-            data
-        } 
+        return await this.institucionService.getById(idInst)
+    }
+
+    @Get('filtrar/org/:id')
+    async getByOrg(@Param('id',ParseIntPipe) idOrg:number){
+        return await this.institucionService.getByOrg(idOrg)
     }
 
     @Post()
-    async createOne(@Body() dto: CreateDTO){
-        const data = await this.institucionService.createOne(dto)
-        return{
-            data 
-        }
+    addOne(@Body() crearDTO:CreateInstitucionDTO){
+        return this.institucionService.createOne(crearDTO)
     }
+
+    
 
 }

@@ -4,6 +4,7 @@ import { Organizacion } from './entities';
 import { OrganizacionController } from './organizacion.controller';
 import { OrganizacionService } from './organizacion.service';
 
+
 @Module({
   imports:[
     TypeOrmModule.forFeature([Organizacion])

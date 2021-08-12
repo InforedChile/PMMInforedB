@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Ciudad } from './entities';
@@ -9,17 +9,23 @@ export class CiudadService {
         @InjectRepository(Ciudad)
         private readonly ciudadRepository: Repository<Ciudad>
     ){}
-
-    async getCiudades(){
-        return await this.ciudadRepository.find()
+    
+    async getCiudades():Promise<Ciudad[]>{
+        const data=  await this.ciudadRepository.find()
+        if(data.length===0) throw new NotFoundException('No hay Ciudades registradas')
+        return data
     }
 
     async getByRegion(idRegion: number){
-        return await this.ciudadRepository.find({where:{id_region: idRegion}})
+        const data = await this.ciudadRepository.find({where:{id_region: idRegion}})
+        if(data.length=== 0 ) throw new NotFoundException(`No hay Ciudades registradas en la ${idRegion} region`)
+        return data
     }
 
     async getById(idCiudad: number){
-        return await this.ciudadRepository.findOne({where:{id_ciudad:idCiudad}})
+        const data = await this.ciudadRepository.findOne({where:{id_ciudad:idCiudad}})
+        if(!data) throw new NotFoundException('Ciudad no encontrada')
+        return data
     }
     
 }
