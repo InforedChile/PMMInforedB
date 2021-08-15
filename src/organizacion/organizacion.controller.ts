@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, ParseEnumPipe, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BOOL } from 'src/enums';
-import { CreateOrgDTO } from './dto';
+import { CreateOrgDTO, EditOrgDTO } from './dto';
 import { Organizacion } from './entities';
 import { OrganizacionService } from './organizacion.service';
 
@@ -79,8 +79,40 @@ export class OrganizacionController {
         return await this.organizacionService.getByAuth(authOrg)
     }
 
+    @ApiOperation({
+        summary:'Agrega una Organizacion a la Base de Datos'
+    })
+    @ApiResponse({
+        description: 'Organizacion creada correctamente',
+        status: 201,
+        type: Organizacion
+    })
+    @ApiResponse({
+        description: 'Error de ingreso de parametros',
+        status: 400,
+    })
+    @ApiResponse({
+        description: 'Internal server error',
+        status: 500,
+    })
     @Post()
     async createOne(@Body() dtoOrg: CreateOrgDTO){
         return await this.organizacionService.createOne(dtoOrg)
+    }
+
+    @ApiOperation({
+        summary: 'Edita la informacion de una organización'   
+    })
+    @Put('/edit/:idOrg')
+    async editOne(@Param('idOrg',ParseIntPipe) idOrg:number , @Body() dtoOrg: EditOrgDTO){
+        return await this.organizacionService.editOne(idOrg,dtoOrg)
+    }
+
+    @ApiOperation({
+        summary: 'Elimina una organización'   
+    })
+    @Delete('/delete/:idOrg')
+    async deleteOne(@Param('idOrg',ParseIntPipe) idOrg:number){
+        return await this.organizacionService.deleteOne(idOrg)
     }
 }
