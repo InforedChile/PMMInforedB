@@ -8,6 +8,8 @@ import { InstitucionModule } from './institucion/institucion.module';
 import { CategoriaModule } from './categoria/categoria.module';
 import { SubcategoriaModule } from './subcategoria/subcategoria.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PersonaModule } from './persona/persona.module';
+import { PlantillaModule } from './plantilla/plantilla.module';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       entities: [__dirname+'./**/**/*entity{.ts,.js}'],
       autoLoadEntities: true,
       synchronize: true,
-    }),CiudadModule, OrganizacionModule, InstitucionModule, CategoriaModule, SubcategoriaModule],
+    }),CiudadModule, OrganizacionModule, InstitucionModule, CategoriaModule, SubcategoriaModule, PersonaModule, PlantillaModule],
   controllers: [AppController],
   providers: [AppService],
 })

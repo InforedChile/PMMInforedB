@@ -1,6 +1,6 @@
 import { ParseEnumPipe } from '@nestjs/common';
 import { Body, Controller, Delete, Get, Param, ParseArrayPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ST } from 'src/enums';
 import { CategoriaService } from './categoria.service';
 import { Categoria } from './entities';
@@ -11,6 +11,9 @@ export class CategoriaController {
 
     constructor(private readonly categoriaService: CategoriaService){}
 
+    @ApiOperation({
+        summary: 'Enlista categorias registradas del sistema'
+    })
     @ApiResponse({
         status: 200,
         description: 'Lista de categorias entregadas correctamente',
@@ -28,7 +31,10 @@ export class CategoriaController {
     async getCategorias():Promise<Categoria[]>{
         return await this.categoriaService.getCategorias()
     }
-
+    
+    @ApiOperation({
+        summary: `Filtra las categorias segun el criterio de st = "${ST.ACTIVO}" o "${ST.INACTIVO}"`
+    })
     @ApiResponse({
         status: 200,
         description: 'Lista de categorias entregadas correctamente',
@@ -51,6 +57,9 @@ export class CategoriaController {
         return await this.categoriaService.getByST(stCategoria)        
     }
 
+    @ApiOperation({
+        summary: 'Entrega los datos de la categoria solicitada a traves de su id'
+    })
     @ApiResponse({
         status: 200,
         description: 'Categoria encontrada correctamente',
@@ -72,6 +81,8 @@ export class CategoriaController {
     async getById(@Param('id',ParseIntPipe) idCategoria: number):Promise<Categoria>{
         return await this.categoriaService.getById(idCategoria)
     }
+
+  
 
     
 

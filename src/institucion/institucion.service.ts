@@ -1,4 +1,4 @@
-import { BadRequestException, NotAcceptableException } from '@nestjs/common';
+import { BadRequestException, NotAcceptableException, NotImplementedException } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -44,6 +44,14 @@ export class InstitucionService {
         newInstitucion.fecha_crea=new Date();
         const institucion= await this.institucionRepository.save(newInstitucion)
         return institucion
+    }
+
+    async editOne(){
+        throw new NotImplementedException('No Implementado')
+    }
+
+    async deleteOne(){
+        throw new NotImplementedException('No Implementado')
     }
 
 }

@@ -1,5 +1,6 @@
-import { Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiForbiddenResponse, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Param, ParseEnumPipe, ParseIntPipe} from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ST } from 'src/enums';
 import { CiudadService } from './ciudad.service';
 import { Ciudad } from './entities';
 
@@ -9,6 +10,9 @@ export class CiudadController {
 
     constructor( private readonly ciudadService: CiudadService ){}
     
+    @ApiOperation({
+        summary: 'Enlista ciudades registradas del sistema'
+    })
     @ApiResponse({
         status: 200,
         description: 'Lista de ciudades',
@@ -28,6 +32,9 @@ export class CiudadController {
         return data
     }
 
+    @ApiOperation({
+        summary: 'Busca ciudades segun su id'
+    })
     @ApiResponse({
         status: 200,
         description: 'Ciudad encontrada',
@@ -50,6 +57,9 @@ export class CiudadController {
         return await this.ciudadService.getById(idCiudad)
     }
 
+    @ApiOperation({
+        summary: 'Enlista ciudad registradas en la región indicada'
+    })
     @ApiResponse({
         status: 200,
         description: 'Ciudades asociadas a una region',
@@ -71,4 +81,35 @@ export class CiudadController {
     async getByRegion(@Param('id', ParseIntPipe) idRegion:number){
         return await this.ciudadService.getByRegion(idRegion)
     }
+
+    @ApiOperation({
+        summary: 'Filtra las ciudades según su región y su estado '
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Lista de ciudades',
+        type: [Ciudad]
+    })
+    @ApiResponse({
+        status: 400,
+        description: 'Id región entregada no valida'
+    })
+    @ApiResponse({
+        status: 400,
+        description: `Estado entregado no es valido, estos deben ser "${ST.ACTIVO}" o "${ST.INACTIVO}"`
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'No hay ciudades en la región con el estado indicado'
+    })
+    @ApiResponse({
+        status: 500,
+        description: 'Internal server error'
+    })
+    @Get('/filtrar/reg/:idReg/estado/:st')
+    async getByRegByST(@Param('idReg',ParseIntPipe) idReg:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
+        return await this.ciudadService.getBySTByReg(idReg,st)
+    }
+
+
 }
