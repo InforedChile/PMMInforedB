@@ -3,9 +3,17 @@
 ## Schemas
 
 Ciudad: {
+
+
     id_ciudad: number // Identificador de la ciudad
+
+
     nombre_ciudad: string // Nombre de la ciudad
+
+
     id_region: number // Region donde se ubica
+
+    
     st_ciudad: Enum:[ activo, inactivo ] // Indica si la ciudad esta activa o no
 }
 
