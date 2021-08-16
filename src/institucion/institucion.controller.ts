@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateInstitucionDTO } from './dto';
+import { CreateInstitucionDTO, EditInstitucionDTO } from './dto';
 import { Institucion } from './entities';
 import { InstitucionService } from './institucion.service';
 
@@ -57,19 +57,20 @@ export class InstitucionController {
     }
 
     @ApiOperation({
-        summary: 'No Implementado'
+        summary: 'Edita los datos de una institucion'
     })
-    @Put()
-    editOne(){
-        return this.institucionService.editOne()
+    @Put('/edit/:id')
+    editOne(@Param('id',ParseIntPipe) idInst:number,@Body() editDTO: EditInstitucionDTO){
+        return this.institucionService.editOne(idInst,editDTO)
     }
 
     @ApiOperation({
         summary: 'No implementado'
     })
-    @Delete()
-    deleteOne(){
-        return this.institucionService.deleteOne()
+
+    @Delete('/delete/:id')
+    deleteOne(@Param('id',ParseIntPipe) idInst:number){
+        return this.institucionService.deleteOne(idInst)
     }
 
     

@@ -2,7 +2,7 @@ import { BadRequestException, NotAcceptableException, NotImplementedException } 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateInstitucionDTO } from './dto';
+import { CreateInstitucionDTO, EditInstitucionDTO } from './dto';
 import { Institucion } from './entities';
 
 @Injectable()
@@ -46,12 +46,15 @@ export class InstitucionService {
         return institucion
     }
 
-    async editOne(){
-        throw new NotImplementedException('No Implementado')
+    async editOne(idInst:number,editDTO:EditInstitucionDTO):Promise<Institucion>{
+        const institucion = await this.getById(idInst)
+        const editInst = Object.assign(institucion,editDTO)
+        return await this.institucionRepository.save(editInst)
     }
 
-    async deleteOne(){
-        throw new NotImplementedException('No Implementado')
+    async deleteOne(idInst:number){
+        const insti = await this.getById(idInst)
+        return this.institucionRepository.remove(insti)
     }
 
 }

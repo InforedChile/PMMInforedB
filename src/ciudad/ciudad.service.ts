@@ -34,5 +34,11 @@ export class CiudadService {
         if (data.length === 0) throw new NotFoundException(` No hay ciudades registradas en la region "${idReg}" con el estado "${st}"`)
         return data
     }
+
+    async getByST(st:ST):Promise<Ciudad[]>{
+        const data = await this.ciudadRepository.find({where:{st_ciudad: st}})
+        if(data.length === 0) throw new NotFoundException(`No hay ciudades con estado ${st}`)
+        return data
+    }
     
 }

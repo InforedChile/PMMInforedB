@@ -90,10 +90,7 @@ export class CiudadController {
         description: 'Lista de ciudades',
         type: [Ciudad]
     })
-    @ApiResponse({
-        status: 400,
-        description: 'Id región entregada no valida'
-    })
+
     @ApiResponse({
         status: 400,
         description: `Estado entregado no es valido, estos deben ser "${ST.ACTIVO}" o "${ST.INACTIVO}"`
@@ -109,6 +106,31 @@ export class CiudadController {
     @Get('/filtrar/reg/:idReg/estado/:st')
     async getByRegByST(@Param('idReg',ParseIntPipe) idReg:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
         return await this.ciudadService.getBySTByReg(idReg,st)
+    }
+
+    @ApiOperation({
+        summary: 'Filtra las ciudades según su estado '
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Lista de ciudades',
+        type: [Ciudad]
+    })
+    @ApiResponse({
+        status: 400,
+        description: `Estado entregado no es valido, estos deben ser "${ST.ACTIVO}" o "${ST.INACTIVO}",o region entregada no es valida`
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'No hay ciudades con el estado indicado'
+    })
+    @ApiResponse({
+        status: 500,
+        description: 'Internal server error'
+    })
+    @Get('/filtrar/st/:st')
+    async  getByST(@Param('st',new ParseEnumPipe(ST)) stCiudad: ST){
+        return await this.ciudadService.getByST(stCiudad)
     }
 
 

@@ -6,6 +6,7 @@ import { BOOL, ST } from "src/enums";
 export class CreateInstitucionDTO{
     @ApiProperty()
     @IsNumber()
+    @IsOptional()
     id_usuario: number;
 
     @ApiProperty()
@@ -58,18 +59,22 @@ export class CreateInstitucionDTO{
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     latitud: string;
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     longitud: string;
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     web: string;
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     video: string;
 
     @ApiProperty()
@@ -88,13 +93,12 @@ export class CreateInstitucionDTO{
 
     @ApiProperty()
     @IsString()
-    @MinLength(1)
+    @IsEmail()
     email1: string;
 
     @ApiProperty()
     @IsOptional()
-    @IsString()
-    @MinLength(1)
+    @IsEmail()
     email2: string;
 
     @ApiProperty()
@@ -105,40 +109,27 @@ export class CreateInstitucionDTO{
     //??
     @ApiProperty()
     @IsEnum(BOOL)
-    geoposicion: BOOL;
-
-    //NO
-    @ApiProperty()
-    @IsEnum(BOOL)
-    destacar: BOOL;
+    @IsOptional()
+    geoposicion: BOOL;    
 
     @ApiProperty()
     @IsString()
     @MaxLength(200)
+    @IsOptional()
     twitter: string;
 
     @ApiProperty()
     @IsString()
     @MaxLength(200)
+    @IsOptional()
     facebook: string;
     
-    // Auntomatico
-    @ApiProperty()
-    @IsEnum(ST)
-    st_institucion: ST;
-
     @ApiProperty()
     @IsNumber()
     id_organizacion: number;
 
     @ApiProperty()
     @IsNumber()
+    @IsOptional()
     id_plantilla: number;
-
-    // Automatico
-    @ApiProperty()
-    @IsNumber()
-    @Min(0)
-    errores: number;
-
 }
