@@ -28,7 +28,7 @@ export class CategoriaController {
         description: 'Internal server error',
     })
     @Get()
-    async getCategorias():Promise<Categoria[]>{
+    async getCategorias(){
         return await this.categoriaService.getCategorias()
     }
     
@@ -53,7 +53,7 @@ export class CategoriaController {
         description: 'Internal server error',
     })
     @Get('/filtrar/st/:st')
-    async getActivos(@Param('st',new ParseEnumPipe(ST)) stCategoria:ST):Promise<Categoria[]>{
+    async getActivos(@Param('st',new ParseEnumPipe(ST)) stCategoria:ST){
         return await this.categoriaService.getByST(stCategoria)        
     }
 
@@ -78,7 +78,7 @@ export class CategoriaController {
         description: 'Internal server error',
     })
     @Get('/ver/:id')
-    async getById(@Param('id',ParseIntPipe) idCategoria: number):Promise<Categoria>{
+    async getById(@Param('id',ParseIntPipe) idCategoria: number){
         return await this.categoriaService.getById(idCategoria)
     }
 
