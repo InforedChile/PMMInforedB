@@ -1,6 +1,7 @@
 import { BadRequestException, NotAcceptableException, NotImplementedException } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ST } from 'src/enums';
 import { Repository } from 'typeorm';
 import { CreateInstitucionDTO, EditInstitucionDTO } from './dto';
 import { Institucion } from './entities';
@@ -27,6 +28,12 @@ export class InstitucionService {
         const data = await this.institucionRepository.find({where:{id_organizacion: idOrg}})
         if(data.length === 0 ) throw new NotFoundException('No hay instituciones asociadas a la organizacion')
         return data
+    }
+
+    async getByOrgBySt(idOrg: number, st:ST):Promise<Institucion[]>{
+        const data = await this.institucionRepository.find({where:{id_organizacion: idOrg,st_institucion:st}})
+        if(data.length === 0) throw new NotFoundException(`No hay instituciones con estado ${st} asociadas a la organizacion indicada`)
+        return data 
     }
 
     async createOne(dto: CreateInstitucionDTO){

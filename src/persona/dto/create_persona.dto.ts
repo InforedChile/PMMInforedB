@@ -1,23 +1,15 @@
-import { ApiProperty} from "@nestjs/swagger";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
 import { ST } from "src/enums";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('tbl_persona')
-export class Persona {
-    @ApiProperty({
-        description: 'Identificacion de la persona'
-    })
-    @PrimaryGeneratedColumn()
-    id_persona: number;
+export class CreatePersonaDTO{
+
 
     @ApiProperty({
         description: 'id de la organizacion asociada ',
         type: 'int',
     })
-    @Column({
-        type: 'int',
-        nullable: false
-    })
+    @IsNumber()
     id_organizacion: number;
 
     @ApiProperty({
@@ -25,52 +17,55 @@ export class Persona {
         type: 'int',
         nullable: true,
     })
-    @Column()
+    @IsNumber()
     id_institucion: number;
 
     @ApiProperty()
-    @Column()
+    @IsString()
     nombre: string
 
     @ApiProperty()
-    @Column()
+    @IsString()
     rut: string
 
     @ApiProperty()
-    @Column()
+    @IsString()
+    @IsOptional()
     departamento: string
 
     @ApiProperty()
-    @Column()
+    @IsString()
+    @IsOptional()
     area: string
 
     @ApiProperty()
-    @Column()
+    @IsString()
+    @IsOptional()
     sub_area: string
 
     @ApiProperty()
-    @Column()
+    @IsString()
+    @IsOptional()
     direccion: string
 
     @ApiProperty()
-    @Column()
+    @IsString()
+    @IsOptional()
     correo: string
 
     @ApiProperty()
-    @Column()
+    @IsString()
+    @IsOptional()
     telefono: string
 
     @ApiProperty()
-    @Column()
+    @IsString()
+    @IsOptional()
     cargo: string
 
     @ApiProperty()
-    @Column({
-        type: 'enum',
-        enum: ST,
-        default: ST.ACTIVO
-    })
+    @IsEnum(ST)
+    @IsOptional()
     st_persona:ST
     
-
 }

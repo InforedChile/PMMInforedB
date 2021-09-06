@@ -31,7 +31,7 @@ export class Subcategoria{
     @Column({
         type:'enum',
         enum: ST,
-        default: ST.ACTIVO,
+        default: ST.INACTIVO,
         collation:'latin1_swedish_ci',
         nullable:false       
     })
