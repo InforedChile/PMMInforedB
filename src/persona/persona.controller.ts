@@ -1,6 +1,8 @@
-import { Controller, Get, Param, ParseEnumPipe, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ST } from 'src/enums';
+import { CreatePersonaDTO } from './dto';
+import { EditPersonaDTO } from './dto/edit_persona.dto';
 import { PersonaService } from './persona.service';
 
 @ApiTags('Persona')
@@ -38,6 +40,21 @@ export class PersonaController {
     @Get('filtrar/inst/:idInt/estado/:st')
     async getByIntBySt(@Param('idInt',ParseIntPipe) idInt:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
         return await this.personaService.getByIntByST(idInt,st)
+    }
+
+    @Post('add')
+    async addPersona(@Body() personaDTO: CreatePersonaDTO){
+        return await this.personaService.addPersona(personaDTO)
+    }
+
+    @Put('edit/:id')
+    async editPersona(@Param('id',ParseIntPipe) idPersona: number,@Body() personaDTO:EditPersonaDTO){
+        return await this.personaService.editPersona(idPersona,personaDTO)
+    }
+
+    @Delete('delete/:id')
+    async deletePersona(@Param('id',ParseIntPipe)idPersona:number){
+        return await this.personaService.deletePersona(idPersona)
     }
 
     
