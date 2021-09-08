@@ -95,7 +95,7 @@ export class OrganizacionController {
         description: 'Internal server error',
         status: 500,
     })
-    @Post()
+    @Post('add')
     async createOne(@Body() dtoOrg: CreateOrgDTO){
         return await this.organizacionService.createOne(dtoOrg)
     }
