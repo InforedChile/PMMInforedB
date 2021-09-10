@@ -4,87 +4,87 @@
 
 Persona :{
 
-id_persona:	number \\ Identificacion de la persona
+    id_persona:	number \\ Identificacion de la persona
 
-id_organizacion: number \\ Id de la organizacion asociada
+    id_organizacion: number \\ Id de la organizacion asociada
 
-id_institucion: number \\ Identificador de la institucion asociada
+    id_institucion: number \\ Identificador de la institucion asociada
 
-nombre: string
+    nombre: string
 
-rut: string
+    rut: string
 
-departamento: string
+    departamento: string
 
-area: string
+    area: string
 
-sub_area: string
+    sub_area: string
 
-direccion: string
+    direccion: string
 
-correo: string
+    correo: string
 
-telefono: string
+    telefono: string
 
-cargo: string
+    cargo: string
 
-st_persona: string
+    st_persona: string
 
 }
 
 CreatePersonaDTO :{
 
-id_organizacion: number
+    id_organizacion: number
 
-id_institucion: number
+    id_institucion: number
 
-nombre: string
+    nombre: string
 
-rut: string
+    rut: string
 
-departamento: string
+    departamento: string
 
-area: string
+    area: string
 
-sub_area: string
+    sub_area: string
 
-direccion: string
+    direccion: string
 
-correo: string
+    correo: string
 
-telefono: string
+    telefono: string
 
-cargo: string
+    cargo: string
 
-st_persona: string
+    st_persona: string
 
 }
 
 EditPersonaDTO :{
     
-id_organizacion: number
+    id_organizacion: number
 
-id_institucion: number
+    id_institucion: number
 
-nombre: string
+    nombre: string
 
-rut: string
+    rut: string
 
-departamento: string
+    departamento: string
 
-area: string
+    area: string
 
-sub_area: string
+    sub_area: string
 
-direccion: string
+    direccion: string
 
-correo: string
+    correo: string
 
-telefono: string
+    telefono: string
 
-cargo: string
+    cargo: string
 
-st_persona: string
+    st_persona: string
 
 }
 
