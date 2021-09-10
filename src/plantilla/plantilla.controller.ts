@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePlantillaDTO, EditPlantillaDTO } from './dto';
+import { Plantilla } from './entities/plantilla.entity';
 import { PlantillaService } from './plantilla.service';
 
 @ApiTags('Plantilla')
@@ -15,6 +16,9 @@ export class PlantillaController {
         return await this.plantillaService.getMany()
     }
 
+    @ApiResponse({
+        type: Plantilla
+    })
     @Get('ver/:id')
     async getById(@Param('id',ParseIntPipe) idPlantilla: number){
         return await this.plantillaService.getOne(idPlantilla)

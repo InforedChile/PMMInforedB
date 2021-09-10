@@ -1,28 +1,101 @@
-#Modulo Categoria
+# Modulo Plantilla
 
 ## Schemas
 
-Categoria: {
-
-    id_publico_cate: number // Identificador de categoria
-
-    nombre_publico_cate: string // Nombre de categoria
-
-    imagen: string // Imagen a ser mostrada
-
-    orden: number // (??)
-
-    st_publico_cate: Enum[ activo, inactivo ] // Indica si la categoria es visible o no
+Plantilla{
+    
+    id_plantilla: number
+    
+    id_organizacion: number
+    
+    nombre_plantilla: string
+    
+    vnombre: string
+    
+    vrut: string
+    
+    vdepto: string
+    
+    varea: string
+    
+    vsub_area: string
+    
+    vdireccion: string
+    
+    vcorreo: string
+    
+    vtelefono: string
+    
+    vcargo: string
 }
+
+CreatePlantillaDTO :{
+    
+    id_plantilla: number
+    
+    id_organizacion: number
+    
+    nombre_plantilla: string
+    
+    vnombre: string
+    
+    vrut: string
+    
+    vdepto: string
+    
+    varea: string
+    
+    vsub_area: string
+    
+    vdireccion: string
+    
+    vcorreo: string
+    
+    vtelefono: string
+    
+    vcargo: string
+}
+
+EditPlantillaDTO :{
+    
+    id_plantilla: number
+    
+    id_organizacion: number
+    
+    nombre_plantilla: string
+    
+    vnombre: string
+    
+    vrut: string
+    
+    vdepto: string
+    
+    varea: string
+    
+    vsub_area: string
+    
+    vdireccion: string
+    
+    vcorreo: string
+    
+    vtelefono: string
+    
+    vcargo: string
+}
+
+
 
 ## Rutas ('/cat/')
 
-| Metodo HTTP | Ruta              | Params                  | Body | Return           | Función                                  |
-|-------------|-------------------|-------------------------|------|------------------|------------------------------------------|
-| GET         | ""                |                         |      | Lista(Categoria) | Entrega todas las categorias registradas |
-| GET         | "ver/{id}"        | id:Id Categoria         |      | Categoria        | Busca una categoria segun su ID          |
-| GET         | "filtrar/st/{st}" | st: Estado de Categoria |      | Lista(Categoria) | Filtra las categorias segun su estado    |
+|        | Ruta                  | Params                 | Body             | Return           | Función                                              |
+|--------|-----------------------|------------------------|------------------|------------------|------------------------------------------------------|
+| GET    | ""                    |                        |                  | Lista(Plantilla) | Entrega todas las plantillas registradas             |
+| GET    | "ver/{id}"            | id:Id Plantilla        |                  | Plantilla        | Busca una plantilla segun su ID                      |
+| GET    | "filtrar/org/{idOrg}" | idOrg: Id Organización |                  | Lista(Plantilla) | Filtra las plantillas según la organización asociada |
+| POST   | "add"                 |                        | CreatePersonaDTO | Plantilla        | Crea una nueva plantilla                             |
+| PUT    | "edit/{id}"           | id: Id Plantilla       | EditPersonaDTO   | Plantilla        | Edita una plantilla existente                        |
+| DELETE | "delete/{id}"         | id: Id Plantilla       |                  | Plantilla        | Elimina una plantilla existente                      |
 
 ## Observaciones
-* Se considera que no se pueden sugerir nuevas categorias
-* No se implementa 'Post', 'Put' y 'Delete', puesto que se considera que solamente va a ser una tabla de consultas.
+* Modulo propuesto por el equipo
+* Faltan Verificaciones y documentar
