@@ -27,7 +27,7 @@ Organizacion :{
     auth: Enum("si","no") // Categoria predeterminada
 }
 
-CreateOrgDTO{
+CreateOrgDTO :{ 
     
     nombre: string
     
@@ -49,7 +49,7 @@ CreateOrgDTO{
 
 }
 
-EditOrgDTO{
+EditOrgDTO :{
     
     nombre: string
     

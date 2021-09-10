@@ -2,7 +2,7 @@
 
 ## Schemas
 
-Persona{
+Persona :{
 
 id_persona:	number \\ Identificacion de la persona
 
@@ -32,7 +32,7 @@ st_persona: string
 
 }
 
-CreatePersonaDTO{
+CreatePersonaDTO :{
 
 id_organizacion: number
 
@@ -60,7 +60,7 @@ st_persona: string
 
 }
 
-EditPersonaDTO{
+EditPersonaDTO :{
     
 id_organizacion: number
 
