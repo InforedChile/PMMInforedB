@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ST } from 'src/enums';
 import { CreatePersonaDTO } from './dto';
 import { EditPersonaDTO } from './dto/edit_persona.dto';
+import { Persona } from './entities';
 import { PersonaService } from './persona.service';
 
 @ApiTags('Persona')
@@ -11,7 +12,9 @@ export class PersonaController {
     constructor(
         private readonly personaService: PersonaService
     ){}
-
+    @ApiResponse({
+        type: Persona
+    })
     @Get()
     async getMany(){
         return await this.personaService.getMany()

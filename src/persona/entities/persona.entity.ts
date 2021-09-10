@@ -28,49 +28,67 @@ export class Persona {
     @Column()
     id_institucion: number;
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     nombre: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     rut: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     departamento: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     area: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     sub_area: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     direccion: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     correo: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     telefono: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column()
     cargo: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description:''
+    })
     @Column({
         type: 'enum',
         enum: ST,
         default: ST.ACTIVO
     })
     st_persona:ST
-    
-
 }

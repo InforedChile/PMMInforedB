@@ -3,6 +3,7 @@
 ## Schemas
 
 Organizacion :{
+
     id_organizacion: number //Identificador de la organizacion
     
     nombre: string // Nombre de la organización
@@ -49,6 +50,7 @@ CreateOrgDTO{
 }
 
 EditOrgDTO{
+    
     nombre: string
     
     ubicacion: string
