@@ -126,7 +126,7 @@ export class InstitucionController {
         description: 'Internal server error',
         status: 500
     })
-    @Post()
+    @Post('add')
     addOne(@Body() crearDTO:CreateInstitucionDTO){
         return this.institucionService.createOne(crearDTO)
     }
