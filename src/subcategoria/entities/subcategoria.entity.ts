@@ -1,17 +1,21 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { ST } from "src/enums";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tbl_publico_cate_sub')
 export class Subcategoria{
+    @ApiProperty()
     @PrimaryGeneratedColumn()
     id_publico_cate_sub: number;
 
+    @ApiProperty()
     @Column({
         type: 'int',
         nullable:false
     })
     id_publico_cate: number;
 
+    @ApiProperty()
     @Column({
         type: 'varchar',
         length: 200,
@@ -20,6 +24,7 @@ export class Subcategoria{
     })
     nombre_publico_cate_sub: string;
 
+    @ApiProperty()
     @Column({
         type:'varchar',
         length: 200,
@@ -28,6 +33,7 @@ export class Subcategoria{
     })
     imagen: string;
 
+    @ApiProperty()
     @Column({
         type:'enum',
         enum: ST,

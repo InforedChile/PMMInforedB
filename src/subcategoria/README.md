@@ -1,28 +1,59 @@
-#Modulo Categoria
+#Modulo SubCategoria
 
 ## Schemas
 
-Categoria: {
+Subcategoria :{
 
-    id_publico_cate: number // Identificador de categoria
+    id_publico_cate_sub: number
+    
+    id_publico_cate: number
+    
+    nombre_publico_cate_sub: string
+    
+    imagen: string
+    
+    st_publico_cate_sub: string
 
-    nombre_publico_cate: string // Nombre de categoria
-
-    imagen: string // Imagen a ser mostrada
-
-    orden: number // (??)
-
-    st_publico_cate: Enum[ activo, inactivo ] // Indica si la categoria es visible o no
 }
 
-## Rutas ('/cat/')
+CreateSubcategoriaDTO :{
 
-| Metodo HTTP | Ruta              | Params                  | Body | Return           | Función                                  |
-|-------------|-------------------|-------------------------|------|------------------|------------------------------------------|
-| GET         | ""                |                         |      | Lista(Categoria) | Entrega todas las categorias registradas |
-| GET         | "ver/{id}"        | id:Id Categoria         |      | Categoria        | Busca una categoria segun su ID          |
-| GET         | "filtrar/st/{st}" | st: Estado de Categoria |      | Lista(Categoria) | Filtra las categorias segun su estado    |
+    id_publico_cate_sub: number
+    
+    id_publico_cate: number
+    
+    nombre_publico_cate_sub: string
+    
+    imagen: string
+    
+}
+
+EditSubcategoriaDTO :{
+
+    id_publico_cate_sub: number
+    
+    id_publico_cate: number
+    
+    nombre_publico_cate_sub: string
+    
+    imagen: string
+    
+    st_publico_cate_sub: string
+
+}
+
+
+## Rutas ('/subcategoria/')
+
+|        | Ruta                                | Params                             | Body                  | Return              | Función                                                 |
+|--------|-------------------------------------|------------------------------------|-----------------------|---------------------|---------------------------------------------------------|
+| GET    | ""                                  |                                    |                       | Lista(Subcategoria) | Entrega todas las subcategorias registradas             |
+| GET    | "ver/{id}"                          | id:Id Subcategoria                 |                       | Subcategoria        | Busca una subcategoria segun su ID                      |
+| GET    | "filtrar/cate/{idCate}"             | idCate: Id Categoria               |                       | Lista(Subcategoria) | Filtra las subcategorias según la categoria asociada    |
+| GET    | "filtrar/cate/{idCate}/estado/{st}" | idCate: Id Categoria ; st: Estado  |                       | Lista(Subcategoria) | Filtra las subcategorias segun su categoria y su estado |
+| POST   | "add"                               |                                    | CreateSubcategoriaDTO | Subcategoria        | Crea una nueva plantilla                                |
+| PUT    | "edit/{id}"                         | id: Id SubCategoria                | EditSubcategoriaDTO   | Subcategoria        | Edita una plantilla existente                           |
+| DELETE | "delete/{id}"                       | id: Id SubCategoria                |                       | Subcategoria        | Elimina una plantilla existente                         |
 
 ## Observaciones
-* Se considera que no se pueden sugerir nuevas categorias
-* No se implementa 'Post', 'Put' y 'Delete', puesto que se considera que solamente va a ser una tabla de consultas.
+* Falta hacer verificaciones, algunos metodos requieren variables de sesion.

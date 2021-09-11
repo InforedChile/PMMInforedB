@@ -1,7 +1,8 @@
 import { Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ST } from 'src/enums';
 import { CreateSubcategoriaDTO, EditSubcategoriaDTO } from './dto';
+import { Subcategoria } from './entities';
 import { SubcategoriaService } from './subcategoria.service';
 
 @ApiTags('Subcategoria')
@@ -16,6 +17,9 @@ export class SubcategoriaController {
         return await this.subcategoriaService.getMany()
     }
 
+    @ApiResponse({
+        type: Subcategoria
+    })
     @Get('ver/:id')
     async getById(@Param('id',ParseIntPipe) idSub:number){
         return await this.subcategoriaService.getOne(idSub)
