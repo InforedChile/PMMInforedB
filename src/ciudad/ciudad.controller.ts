@@ -27,9 +27,13 @@ export class CiudadController {
         description: 'Internal server error'
     })
     @Get()
-    async getMany():Promise<Ciudad[]>{
-        const data= await this.ciudadService.getCiudades()
-        return data
+    async getMany(){
+        const data = await this.ciudadService.getCiudades()
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -54,7 +58,12 @@ export class CiudadController {
     })
     @Get('/ver/:id')
     async getCity(@Param('id',ParseIntPipe) idCiudad:number){
-        return await this.ciudadService.getById(idCiudad)
+        const data = await this.ciudadService.getById(idCiudad)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -79,7 +88,12 @@ export class CiudadController {
     })
     @Get('/filtrar/region/:id')
     async getByRegion(@Param('id', ParseIntPipe) idRegion:number){
-        return await this.ciudadService.getByRegion(idRegion)
+        const data = await this.ciudadService.getByRegion(idRegion)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -105,7 +119,12 @@ export class CiudadController {
     })
     @Get('/filtrar/reg/:idReg/estado/:st')
     async getByRegByST(@Param('idReg',ParseIntPipe) idReg:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
-        return await this.ciudadService.getBySTByReg(idReg,st)
+        const data = await this.ciudadService.getBySTByReg(idReg,st)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -130,7 +149,12 @@ export class CiudadController {
     })
     @Get('/filtrar/st/:st')
     async  getByST(@Param('st',new ParseEnumPipe(ST)) stCiudad: ST){
-        return await this.ciudadService.getByST(stCiudad)
+        const data = await this.ciudadService.getByST(stCiudad)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
 

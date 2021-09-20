@@ -29,7 +29,12 @@ export class CategoriaController {
     })
     @Get()
     async getCategorias(){
-        return await this.categoriaService.getCategorias()
+        const data = await this.categoriaService.getCategorias()
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
     
     @ApiOperation({
@@ -54,7 +59,12 @@ export class CategoriaController {
     })
     @Get('/filtrar/st/:st')
     async getActivos(@Param('st',new ParseEnumPipe(ST)) stCategoria:ST){
-        return await this.categoriaService.getByST(stCategoria)        
+        const data = await this.categoriaService.getByST(stCategoria)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }        
     }
 
     @ApiOperation({
@@ -79,7 +89,12 @@ export class CategoriaController {
     })
     @Get('/ver/:id')
     async getById(@Param('id',ParseIntPipe) idCategoria: number){
-        return await this.categoriaService.getById(idCategoria)
+        const data = await this.categoriaService.getById(idCategoria)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
   

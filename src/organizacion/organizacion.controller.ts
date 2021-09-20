@@ -30,7 +30,12 @@ export class OrganizacionController {
     })
     @Get()
     async getMany(){
-        return await this.organizacionService.getMany()
+        const data = await this.organizacionService.getMany()
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -51,7 +56,12 @@ export class OrganizacionController {
     })
     @Get('/ver/:id')
     async getOne(@Param('id',ParseIntPipe) idOrg:number ){
-        return await this.organizacionService.getOne(idOrg)
+        const data = await this.organizacionService.getOne(idOrg)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -76,7 +86,12 @@ export class OrganizacionController {
     })
     @Get('/filtrar/auth/:bool')
     async getByAuth(@Param('bool',new ParseEnumPipe(BOOL)) authOrg: BOOL){
-        return await this.organizacionService.getByAuth(authOrg)
+        const data = await this.organizacionService.getByAuth(authOrg)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -97,7 +112,12 @@ export class OrganizacionController {
     })
     @Post('add')
     async createOne(@Body() dtoOrg: CreateOrgDTO){
-        return await this.organizacionService.createOne(dtoOrg)
+        const data = await this.organizacionService.createOne(dtoOrg)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -105,7 +125,12 @@ export class OrganizacionController {
     })
     @Put('/edit/:idOrg')
     async editOne(@Param('idOrg',ParseIntPipe) idOrg:number , @Body() dtoOrg: EditOrgDTO){
-        return await this.organizacionService.editOne(idOrg,dtoOrg)
+        const data = await this.organizacionService.editOne(idOrg,dtoOrg)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -113,6 +138,11 @@ export class OrganizacionController {
     })
     @Delete('/delete/:idOrg')
     async deleteOne(@Param('idOrg',ParseIntPipe) idOrg:number){
-        return await this.organizacionService.deleteOne(idOrg)
+        const data = await this.organizacionService.deleteOne(idOrg)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 }

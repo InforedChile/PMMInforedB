@@ -14,7 +14,12 @@ export class SubcategoriaController {
 
     @Get()
     async getMany(){
-        return await this.subcategoriaService.getMany()
+        const data = await this.subcategoriaService.getMany()
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiResponse({
@@ -22,31 +27,61 @@ export class SubcategoriaController {
     })
     @Get('ver/:id')
     async getById(@Param('id',ParseIntPipe) idSub:number){
-        return await this.subcategoriaService.getOne(idSub)
+        const data = await this.subcategoriaService.getOne(idSub)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Get('filtrar/cate/:idCate')
     async getByCate(@Param('idCate',ParseIntPipe) idCate:number){
-        return await this.subcategoriaService.getByCate(idCate)
+        const data = await this.subcategoriaService.getByCate(idCate)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Get('filtrar/cate/:idCate/estado/:st')
     async getByCateBySt(@Param('idCate',ParseIntPipe) idCate:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
-        return await this.subcategoriaService.getByCateByST(idCate,st)
+        const data = await this.subcategoriaService.getByCateByST(idCate,st)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Post('add')
     async addSubCate(@Body() subcateDTO: CreateSubcategoriaDTO){
-        return await this.subcategoriaService.addSubcategoria(subcateDTO)
+        const data = await this.subcategoriaService.addSubcategoria(subcateDTO)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Put('edit/:id')
     async editSubCate(@Param('id',ParseIntPipe)idSubCate: number, @Body() subcateDTO:EditSubcategoriaDTO){
-        return await this.subcategoriaService.ediSubcategoria(idSubCate,subcateDTO)
+        const data = await this.subcategoriaService.ediSubcategoria(idSubCate,subcateDTO)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Delete('delete/:id')
     async deleteSubCate(@Param('id',ParseIntPipe)idSubCate: number){
-        return await this.subcategoriaService.deleteSubcategoria(idSubCate)
+        const data = await this.subcategoriaService.deleteSubcategoria(idSubCate)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 }

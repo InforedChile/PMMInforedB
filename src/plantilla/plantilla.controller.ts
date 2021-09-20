@@ -13,7 +13,12 @@ export class PlantillaController {
 
     @Get('')
     async getMany(){
-        return await this.plantillaService.getMany()
+        const data = await this.plantillaService.getMany()
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiResponse({
@@ -21,26 +26,51 @@ export class PlantillaController {
     })
     @Get('ver/:id')
     async getById(@Param('id',ParseIntPipe) idPlantilla: number){
-        return await this.plantillaService.getOne(idPlantilla)
+        const data = await this.plantillaService.getOne(idPlantilla)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Get('filtrar/Organizacion/:idOrg')
     async getByOrg(@Param('idOrg',ParseIntPipe) idOrg: number){
-        return await this.plantillaService.getByOrg(idOrg)
+        const data = await this.plantillaService.getByOrg(idOrg)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Post('add')
     async addPlantilla(@Body() plantillaDTO: CreatePlantillaDTO){
-        return await this.plantillaService.addPlantilla(plantillaDTO)
+        const data = await this.plantillaService.addPlantilla(plantillaDTO)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Put('edit/:id')
     async editPlantilla(@Param('id',ParseIntPipe) idPlantilla:number,@Body() plantillaDTO: EditPlantillaDTO){
-        return await this.plantillaService.editPlantilla(idPlantilla,plantillaDTO)
+        const data = await this.plantillaService.editPlantilla(idPlantilla,plantillaDTO)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @Delete('delete/:id')
     async deletePlantilla(@Param('id',ParseIntPipe) idPlantilla:number){
-        return await this.plantillaService.deletePlantilla(idPlantilla)
+        const data = await this.plantillaService.deletePlantilla(idPlantilla)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 }

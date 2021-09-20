@@ -1,4 +1,4 @@
-#Modulo Organización
+# Modulo Organización
 
 ## Schemas
 
@@ -78,7 +78,7 @@ EditOrgDTO :{
 
 |        | Ruta                  | Params                     | Body         | Return              | Función                                   |
 |--------|-----------------------|----------------------------|--------------|---------------------|-------------------------------------------|
-| GET    | ""                    |                            |              | Lista(Organización) | Entrega todas las categorias registradas  |
+| GET    | ""                    |                            |              | Lista(Organización) | Entrega todas las organizaciónes registradas  |
 | GET    | "ver/{id}"            | id:Id Organizacion         |              | Organización        | Busca una organización segun su ID        |
 | GET    | "filtrar/auth/{bool}" | st: Estado de Organizacion |              | Lista(Organización) | Filtra las organizaciones según su estado |
 | POST   | "add"                 |                            | CreateOrgDTO | Organización        | Crea una nueva organización               |

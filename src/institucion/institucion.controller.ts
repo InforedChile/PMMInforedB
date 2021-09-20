@@ -30,7 +30,12 @@ export class InstitucionController {
     })
     @Get()
     async getMany(){
-        return await this.institucionService.getMany()
+        const data = await this.institucionService.getMany()
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -55,7 +60,12 @@ export class InstitucionController {
     })
     @Get('ver/:id')
     async getOne(@Param('id',ParseIntPipe) idInst:number){
-        return await this.institucionService.getById(idInst)
+        const data = await this.institucionService.getById(idInst)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -80,7 +90,12 @@ export class InstitucionController {
     })
     @Get('filtrar/org/:id')
     async getByOrg(@Param('id',ParseIntPipe) idOrg:number){
-        return await this.institucionService.getByOrg(idOrg)
+        const data = await this.institucionService.getByOrg(idOrg)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -105,7 +120,12 @@ export class InstitucionController {
     })
     @Get('filtrar/org/:id/estado/:st')
     async getByOrgBySt(@Param('id',ParseIntPipe) idOrg:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
-        return await this.institucionService.getByOrgBySt(idOrg,st)
+        const data = await this.institucionService.getByOrgBySt(idOrg,st)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
 
@@ -128,7 +148,7 @@ export class InstitucionController {
     })
     @Post('add')
     addOne(@Body() crearDTO:CreateInstitucionDTO){
-        return this.institucionService.createOne(crearDTO)
+        const data = this.institucionService.createOne(crearDTO)
     }
 
     @ApiOperation({
@@ -153,7 +173,12 @@ export class InstitucionController {
     })
     @Put('/edit/:id')
     editOne(@Param('id',ParseIntPipe) idInst:number,@Body() editDTO: EditInstitucionDTO){
-        return this.institucionService.editOne(idInst,editDTO)
+        const data = this.institucionService.editOne(idInst,editDTO)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
@@ -174,7 +199,12 @@ export class InstitucionController {
     })
     @Delete('/delete/:id')
     deleteOne(@Param('id',ParseIntPipe) idInst:number){
-        return this.institucionService.deleteOne(idInst)
+        const data = this.institucionService.deleteOne(idInst)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     
