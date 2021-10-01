@@ -195,7 +195,7 @@ export class Institucion{
 
     @ApiProperty()
     @Column({
-        name: 'email_aviso',
+        name: 'email1_aviso',
         type: 'varchar',
         length: 255,
         collation: 'latin1_swedish_ci',
@@ -205,7 +205,7 @@ export class Institucion{
 
     @ApiProperty()
     @Column({
-        name: 'email_aviso_2',
+        name: 'email2_aviso',
         type: 'varchar',
         length: 50,
         collation: 'latin1_swedish_ci',
