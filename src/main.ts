@@ -5,6 +5,7 @@ import { DocumentBuilder,SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -14,7 +15,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Backend Directorio Digital Interactivo')
     .setDescription('Descripcion de API')
-    .setVersion('1.0')
+    .setVersion('1.3')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document,{
@@ -24,6 +25,7 @@ async function bootstrap() {
       showRequestDuration:true,
     },
   });
+ 
 
   await app.listen(3000);
 }

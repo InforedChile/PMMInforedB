@@ -172,8 +172,8 @@ export class InstitucionController {
         status: 500
     })
     @Put('/edit/:id')
-    editOne(@Param('id',ParseIntPipe) idInst:number,@Body() editDTO: EditInstitucionDTO){
-        const data = this.institucionService.editOne(idInst,editDTO)
+    async editOne(@Param('id',ParseIntPipe) idInst:number,@Body() editDTO: EditInstitucionDTO){
+        const data = await this.institucionService.editOne(idInst,editDTO)
         return {
             status: 200,
             message: 'OK',

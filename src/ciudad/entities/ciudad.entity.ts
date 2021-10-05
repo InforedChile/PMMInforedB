@@ -6,13 +6,15 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 export class Ciudad{
 
     @ApiProperty({
-        description: 'Identificador de la ciudad'
+        description: 'Identificador de la ciudad',
     })
     @PrimaryGeneratedColumn()
     id_ciudad: number;
 
     @ApiProperty({
-        description: 'Nombre de la ciudad'
+        description: 'Nombre de la ciudad',
+        type: 'tinytext',
+        nullable: true
     })
     @Column({ 
         type:'tinytext',
@@ -22,7 +24,11 @@ export class Ciudad{
     nombre_ciudad: string;
 
     @ApiProperty({
-        description: 'Region donde se ubica'
+        description: 'Region donde se ubica',
+        type: 'tinyint',
+        nullable: false,
+        example: 5,
+        default: 0
     })
     @Column({
         type:'tinyint',
@@ -32,7 +38,9 @@ export class Ciudad{
 
     @ApiProperty({
         description: 'Indica si la ciudad esta activa o no',
-        enum:ST
+        enum:ST,
+        default: ST.ACTIVO,
+        nullable: false
     })
     @Column({
         type:'enum',

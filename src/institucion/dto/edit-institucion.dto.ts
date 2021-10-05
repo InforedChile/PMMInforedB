@@ -11,10 +11,10 @@ export class EditInstitucionDTO extends PartialType(CreateInstitucionDTO){
     @IsOptional()
     destacar: BOOL;
 
-    /*@ApiProperty()
+    @ApiProperty()
     @IsDateString()
     @IsOptional()
-    fecha_destacado: Date;*/
+    fecha_destacado: Date;
     
     @ApiProperty()
     @IsEnum(ST)

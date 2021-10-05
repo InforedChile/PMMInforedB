@@ -6,7 +6,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 export class Institucion{
 
     @ApiProperty({
-        description:'Identificador de la institución'
+        description:'Identificador de la institución',
+        type: 'int'
     })
     @PrimaryGeneratedColumn({
         name:'id_publico_aviso'
@@ -14,16 +15,20 @@ export class Institucion{
     id_institucion: number;
 
     @ApiProperty({
-        description: "Identificador del usuario"
+        description: "Identificador del usuario",
+        type: 'int',
+        
     })
     @Column({
         type: 'int',
-        nullable: false
+        nullable: false,
+        default: 0 // se deja en 0 puesto que no se comprende su rol.
     })
     id_usuario: number;
 
     @ApiProperty({
-        description:'Subcategoria que identifica la institucion'
+        description:'Id de la subcategoria que identifica la institucion',
+        type: 'int'
     })
     @Column({
         type: 'int',
@@ -32,7 +37,8 @@ export class Institucion{
     id_publico_cate_sub: number;
 
     @ApiProperty({
-        description: 'Ciudad donde se ubica la institución'
+        description: 'Id de la ciudad donde se ubica la institución',
+        type: 'int'
     })
     @Column({
         type: 'int',
@@ -42,7 +48,8 @@ export class Institucion{
     id_ciudad: number;
     
     @ApiProperty({
-        description: 'Fecha de creación'
+        description: 'Fecha de creación',
+        type: 'datetime'
     })
     @Column({
         type:'datetime',
@@ -51,7 +58,10 @@ export class Institucion{
     fecha_crea: Date;
 
     @ApiProperty({
-        description: 'Titulo del aviso'
+        description: 'Titulo del aviso',
+        type:'varchar',
+        maxLength: 300,
+        nullable: false
     })
     @Column({
         name:'titulo_aviso',
@@ -63,7 +73,9 @@ export class Institucion{
     titulo_institucion: string;
 
     @ApiProperty({
-        description: 'Descripción'
+        description: 'Descripción',
+        type: 'text',
+        nullable: false
     })
     @Column({
         name: 'descripcion_aviso',
@@ -74,7 +86,8 @@ export class Institucion{
     descripcion: string;
 
     @ApiProperty({
-        description: 'Tags del aviso'
+        description: 'Tags del aviso',
+        type: 'varchar'
     })
     @Column({
         name: 'tags_aviso',
@@ -83,22 +96,29 @@ export class Institucion{
         collation: 'latin1_swedish_ci',
         nullable: false
     })
-    tags: string;
+    tags: string; // podria asignarse automatico, si no ver como lo asigna infored
 
     @ApiProperty({
-        description:'Dirección '
+        description:'Dirección ',
+        type: 'varchar',
+        maxLength: 200,
+        default: ''
     })
     @Column({
         name:'direccion_aviso',
         type:'varchar',
         length: 200,
         collation: 'latin1_swedish_ci',
-        nullable: false
+        nullable: false,
+        default: ''
     })
     direccion: string;
 
     @ApiProperty({
-        description: 'Resumen'
+        description: 'Resumen',
+        type: 'varchar',
+        maxLength: 200
+
     })
     @Column({
         name: 'descripcion_corta',
@@ -110,7 +130,8 @@ export class Institucion{
     resumen: string;
 
     @ApiProperty({
-        description: 'Precio'
+        description: 'Precio',
+        type: 'int'
     })
     @Column({
         name:'precio_aviso',
@@ -120,7 +141,8 @@ export class Institucion{
     precio1: number;
 
     @ApiProperty({
-        description: 'Precio'
+        description: 'Precio',
+        type: 'int'
     })
     @Column({
         name:'precio_aviso_2',
@@ -130,7 +152,9 @@ export class Institucion{
     precio2: number;
 
     @ApiProperty({
-        
+        description: '??',
+        type: 'text',
+        default: ''
     })
     @Column({
         type: 'text',
@@ -139,41 +163,68 @@ export class Institucion{
     })
     google_maps: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description:'Latitud',
+        type:'varchar',
+        maxLength: 50,
+        default: ''
+    })
     @Column({
         type:'varchar',
         length: 50,
-        collation:'latin1:swedish_ci'
+        collation:'latin1_swedish_ci',
+        default: ''
     })
     latitud: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Longitud',
+        type: 'text',
+        maxLength:50,
+        default: ''
+    })
     @Column({
         type:'varchar',
         length: 50,
-        collation:'latin1:swedish_ci'
+        collation:'latin1_swedish_ci',
+        default: ''
     })
     longitud: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Pagina web del aviso',
+        type: 'varchar',
+        nullable: false
+    })
     @Column({
         name: 'sitio_web_aviso',
         type: 'varchar',
         length: 150,
-        collation: 'latin1_swedish_ci'
+        collation: 'latin1_swedish_ci',
+        default: ''
     })
     web: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Video del aviso',
+        type: 'varchar',
+        default:''
+    })
     @Column({
         name:'video_aviso',
         type: 'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci'
+        collation: 'latin1_swedish_ci',
+        default: ''
     })
     video: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Telefono 1',
+        type: 'text',
+        example: '+56XXXXXXXXX',
+        nullable: false
+    })
     @Column({
         name: 'fono_aviso',
         type: 'varchar',
@@ -183,7 +234,12 @@ export class Institucion{
     })
     telefono1: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Telefono 2',
+        type: 'varchar',
+        default: '',
+        example: '+56XXXXXXXXX'
+    })
     @Column({
         name: 'celu_aviso',
         type: 'varchar',
@@ -193,7 +249,12 @@ export class Institucion{
     })
     telefono2: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Correo Electronico 1',
+        type: 'varchar',
+        maxLength: 255,
+        nullable: false
+    })
     @Column({
         name: 'email1_aviso',
         type: 'varchar',
@@ -203,7 +264,12 @@ export class Institucion{
     })
     email1: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Correo Electronico 2',
+        type: 'varchar',
+        maxLength: 50, // no se pq =(,
+        default: ''
+    })
     @Column({
         name: 'email2_aviso',
         type: 'varchar',
@@ -213,7 +279,11 @@ export class Institucion{
     })
     email2: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Horario de Atención',
+        type: 'varchar',
+        maxLength: 200
+    })
     @Column({
         type: 'varchar',
         length: 200,
@@ -222,7 +292,11 @@ export class Institucion{
     })
     horario_atencion: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Geo Posicion',
+        enum: BOOL,
+        default: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -230,7 +304,11 @@ export class Institucion{
     })
     geoposicion: BOOL;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Destacado Aviso',
+        enum: BOOL,
+        default: BOOL.NO
+    })
     @Column({
         name: 'destacado_aviso',
         type: 'enum',
@@ -239,10 +317,13 @@ export class Institucion{
     })
     destacar: BOOL;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Fecha destacado',
+        type: 'date'
+    })
     @Column({
-        type: 'date',
-        default: null,
+        type: 'datetime',
+        default: null
     })
     fecha_destacado: Date;
 
