@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePlantillaDTO, EditPlantillaDTO } from './dto';
 import { Plantilla } from './entities/plantilla.entity';
 import { PlantillaService } from './plantilla.service';
@@ -10,7 +10,17 @@ export class PlantillaController {
     constructor(
         private readonly plantillaService: PlantillaService
     ){}
-
+    
+    @ApiOperation({
+        summary: 'Entrega todas las plantillas registradas'
+    })
+    @ApiOkResponse({
+        description: 'Lista de plantillas',
+        type: [Plantilla]
+    })
+    @ApiNotFoundResponse({
+        description: 'No hay plantillas registradas'
+    })
     @Get('')
     async getMany(){
         const data = await this.plantillaService.getMany()
@@ -21,8 +31,18 @@ export class PlantillaController {
         }
     }
 
-    @ApiResponse({
+    @ApiOperation({
+        summary: 'Entrega la plantilla seleccionada por su id'
+    })
+    @ApiOkResponse({
+        description: 'Plantilla seleccionada',
         type: Plantilla
+    })
+    @ApiNotFoundResponse({
+        description: 'Plantilla no encontrada'
+    })
+    @ApiBadRequestResponse({
+        description: 'Id ingresada en formato erroneo'
     })
     @Get('ver/:id')
     async getById(@Param('id',ParseIntPipe) idPlantilla: number){

@@ -1,15 +1,24 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator"
+import { IsEnum, IsNumber, IsOptional, IsString, MaxLength, MinLength } from "class-validator"
 import { BOOL } from "src/enums"
 
 export class CreatePlantillaDTO{
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Id de la organizacion asociada',
+        type: 'int'
+    })
     @IsNumber()
     id_organizacion: number
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Nombre de la plantilla',
+        type: 'varchar',
+        maxLength: 100
+    })
     @IsString()
+    @MaxLength(100)
+    @MinLength(1)
     nombre_plantilla: string
 
     @ApiProperty()

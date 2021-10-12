@@ -4,19 +4,41 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tbl_plantilla')
 export class Plantilla {
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Id Plantilla'
+    })
     @PrimaryGeneratedColumn()
     id_plantilla: number
 
-    @ApiProperty()
-    @Column()
+    @ApiProperty({
+        description: 'Id organizacion asociada',
+        type: 'int',
+        nullable: false
+    })
+    @Column({
+        type: 'int',
+        nullable: false
+    })
     id_organizacion: number
 
-    @ApiProperty()
-    @Column()
+    @ApiProperty({
+        description: 'Nombre que se le asocia a la plantilla',
+        type: 'varchar',
+        nullable: false
+    })
+    @Column({
+        type:'varchar',
+        length: 100,
+        nullable: false
+    })
     nombre_plantilla: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible el nombre',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -24,7 +46,12 @@ export class Plantilla {
     })
     vnombre: BOOL
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible el rut',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -32,7 +59,12 @@ export class Plantilla {
     })
     vrut: BOOL
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible el depto',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -40,7 +72,12 @@ export class Plantilla {
     })
     vdepto: BOOL
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible el area',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -48,7 +85,12 @@ export class Plantilla {
     })
     varea: BOOL
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible la sub area',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -56,7 +98,12 @@ export class Plantilla {
     })
     vsub_area: BOOL
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible la dirección',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -64,7 +111,12 @@ export class Plantilla {
     })
     vdireccion: BOOL
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible el correo',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -72,7 +124,12 @@ export class Plantilla {
     })
     vcorreo: BOOL
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible el telefono',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
@@ -80,13 +137,16 @@ export class Plantilla {
     })
     vtelefono: BOOL
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica si se debe ser visible el cargo',
+        type: 'enum',
+        enum: BOOL,
+        example: BOOL.NO
+    })
     @Column({
         type: 'enum',
         enum: BOOL,
         default: BOOL.NO
     })
     vcargo: BOOL
-
-
 }
