@@ -5,15 +5,13 @@ import { BOOL } from "src/enums"
 export class CreatePlantillaDTO{
 
     @ApiProperty({
-        description: 'Id de la organizacion asociada',
-        type: 'int'
+        description: 'Id de la organizacion asociada'
     })
     @IsNumber()
     id_organizacion: number
 
     @ApiProperty({
         description: 'Nombre de la plantilla',
-        type: 'varchar',
         maxLength: 100
     })
     @IsString()

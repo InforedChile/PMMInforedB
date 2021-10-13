@@ -10,6 +10,7 @@ import { OrganizacionService } from './organizacion.service';
     TypeOrmModule.forFeature([Organizacion])
   ],
   controllers: [OrganizacionController],
-  providers: [OrganizacionService]
+  providers: [OrganizacionService],
+  exports:[OrganizacionService]
 })
 export class OrganizacionModule {}

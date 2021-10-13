@@ -1,5 +1,6 @@
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { OrganizacionService } from 'src/organizacion/organizacion.service';
 import { Repository } from 'typeorm';
 import { CreatePlantillaDTO, EditPlantillaDTO } from './dto';
 import { Plantilla } from './entities/plantilla.entity';
@@ -8,7 +9,8 @@ import { Plantilla } from './entities/plantilla.entity';
 export class PlantillaService {
     constructor(
         @InjectRepository(Plantilla)
-        private readonly plantillaRepository: Repository<Plantilla>
+        private readonly plantillaRepository: Repository<Plantilla>,
+        private readonly organizacionService: OrganizacionService
     ){}
 
     async getMany():Promise<Plantilla[]>{
@@ -30,6 +32,13 @@ export class PlantillaService {
     }
 
     async addPlantilla(plantillaDTO: CreatePlantillaDTO):Promise<Plantilla>{
+        /* Verificaciones */
+        await  this.organizacionService.getOne(plantillaDTO.id_organizacion) // existencia organización
+        const plantillaName= await  this.plantillaRepository.findOne({where:{
+            id_organizacion:plantillaDTO.id_organizacion,
+            nombre_plantilla:plantillaDTO.nombre_plantilla}})
+        if(plantillaName) throw new BadRequestException('Plantilla ya registrada')
+        /* Creación */
         const nuevaPlantilla = await this.plantillaRepository.create(plantillaDTO)
         const plantilla = await this.plantillaRepository.save(nuevaPlantilla)        
         return plantilla
@@ -37,6 +46,15 @@ export class PlantillaService {
 
     async editPlantilla(idPlantilla:number, editPlantillaDTO:EditPlantillaDTO):Promise<Plantilla>{
         const plantilla = await this.getOne(idPlantilla)
+        /* Verificacion */
+        if(editPlantillaDTO.nombre_plantilla){
+            const plantillaname = await this.plantillaRepository.findOne({where:{
+                id_organizacion:plantilla.id_organizacion,
+                nombre_plantilla: editPlantillaDTO.nombre_plantilla
+            }})
+            if(plantillaname && plantillaname.id_plantilla !== plantilla.id_plantilla)  throw new BadRequestException('Nombre ya registrado')
+        }
+        /* Edición */
         const editPlantilla = Object.assign(plantilla,editPlantillaDTO)
         return await this.plantillaRepository.save(editPlantilla)
     }
