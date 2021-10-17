@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ST } from 'src/enums';
 import { CreatePersonaDTO } from './dto';
 import { EditPersonaDTO } from './dto/edit_persona.dto';
@@ -12,8 +12,18 @@ export class PersonaController {
     constructor(
         private readonly personaService: PersonaService
     ){}
-    @ApiResponse({
-        type: Persona
+
+    /* GET */
+
+    @ApiOperation({
+        summary: 'Entrega lista de personas registradas en el sistema'
+    })
+    @ApiOkResponse({
+        description: 'Lista de personas',
+        type: [Persona]
+    })
+    @ApiNotFoundResponse({
+        description: 'No hay personas registradas en el sistema'
     })
     @Get()
     async getMany(){
@@ -25,6 +35,20 @@ export class PersonaController {
         }
     }
 
+
+    @ApiOperation({
+        summary: 'Busca una persona segun su id'
+    })
+    @ApiOkResponse({
+        description: 'Persona seleccionada',
+        type: Persona
+    })
+    @ApiNotFoundResponse({
+        description: 'Persona no encontrada'
+    })
+    @ApiBadRequestResponse({
+        description: 'Id entregada en formato erroneo'
+    })
     @Get('ver/:id')
     async getById(@Param('id',ParseIntPipe) idPer:number){
         const data = await this.personaService.getOne(idPer)
@@ -35,6 +59,19 @@ export class PersonaController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Filtra personas según su organización'
+    })
+    @ApiOkResponse({
+        description:'Lista de personas en la organización indicada',
+        type: [Persona]
+    })
+    @ApiNotFoundResponse({
+        description: 'No hay personas registradas en esa organización'
+    })
+    @ApiBadRequestResponse({
+        description: 'Id de la organización en formato erroneo'
+    })
     @Get('filtrar/org/:idOrg')
     async getByOrg(@Param('idOrg',ParseIntPipe) idOrg:number){
         const data = await this.personaService.getByOrg(idOrg)
@@ -45,6 +82,19 @@ export class PersonaController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Lista de personas segun la institución'
+    })
+    @ApiOkResponse({
+        description: 'Lista de personas asociadas a la institución',
+        type: [Persona]
+    })
+    @ApiNotFoundResponse({
+        description: 'Lista de personas no encontrada'
+    })
+    @ApiBadRequestResponse({
+        description: 'Id entregada en formato invalido'
+    })
     @Get('filtrar/inst/:idInt')
     async getByInt(@Param('idInt',ParseIntPipe) idInt:number){
         const data = await this.personaService.getByInt(idInt)

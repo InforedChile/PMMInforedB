@@ -5,7 +5,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity('tbl_persona')
 export class Persona {
     @ApiProperty({
-        description: 'Identificacion de la persona'
+        description: 'Identificación de la persona',
+        type: 'int'
     })
     @PrimaryGeneratedColumn()
     id_persona: number;
@@ -25,65 +26,133 @@ export class Persona {
         type: 'int',
         nullable: true,
     })
-    @Column()
+    @Column({
+        type: 'int',
+        nullable: true
+    })
     id_institucion: number;
 
     @ApiProperty({
-        description:''
+        description:'Nombre Persona',
+        type: 'varchar',
+        nullable: false,
+        maxLength: 50
     })
-    @Column()
+    @Column({
+        type: 'varchar',
+        length: '50'
+    })
     nombre: string
 
     @ApiProperty({
-        description:''
+        description:'Rut',
+        type: 'varchar',
+        nullable: false,
+        maxLength: 20
     })
-    @Column()
+    @Column({
+        type: 'varchar',
+        nullable: false,
+        length: 20
+    })
     rut: string
 
     @ApiProperty({
-        description:''
+        description:'Departamento al que pertenece',
+        nullable: true,
+        type: 'varchar',
+        maxLength: 15
     })
-    @Column()
+    @Column({
+        type: 'varchar',
+        length: 15,
+        default: ''
+    })
     departamento: string
 
     @ApiProperty({
-        description:''
+        description:'Area a la que pertenece',
+        type: 'varchar',
+        nullable: true,
+        maxLength: 20
     })
-    @Column()
+    @Column({
+        type:'varchar',
+        length: 20,
+        default:''
+    })
     area: string
 
     @ApiProperty({
-        description:''
+        description:'Sub area a la que pertenece',
+        type: 'varchar',
+        nullable: true,
+        maxLength: 20
     })
-    @Column()
+    @Column({
+        type:'varchar',
+        default:'',
+        length: 20
+    })
     sub_area: string
 
     @ApiProperty({
-        description:''
+        description:'Ubicacion fisica trabajo, numero de oficina',
+        type: 'varchar',
+        nullable: true,
+        maxLength: 50
     })
-    @Column()
+    @Column({
+        type: 'varchar',
+        default: '',
+        length: 50
+    })
     direccion: string
 
     @ApiProperty({
-        description:''
+        description:'Correo electronico',
+        nullable: true,
+        type: 'varchar',
+        maxLength: 50
     })
-    @Column()
+    @Column({
+        type: 'varchar',
+        default: '',
+        length: 50
+    })
     correo: string
 
     @ApiProperty({
-        description:''
+        description:'Telefono de contacto',
+        type: 'varchar',
+        nullable: true,
+        maxLength: 20
     })
-    @Column()
+    @Column({
+        type:'varchar',
+        default: '',
+        length: 20
+    })
     telefono: string
 
     @ApiProperty({
-        description:''
+        description:'Cargo de la persona',
+        type: 'varchar',
+        nullable: true,
+        maxLength:50
     })
-    @Column()
+    @Column({
+        type:'varchar',
+        default:'',
+        length: 50
+    })
     cargo: string
 
     @ApiProperty({
-        description:''
+        description:'Indica si el usuario es visible u oculto',
+        type: 'enum',
+        enum: ST,
+        example: ST.INACTIVO
     })
     @Column({
         type: 'enum',
