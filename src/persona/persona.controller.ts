@@ -105,6 +105,9 @@ export class PersonaController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Filtra las personas según la organización y el estado'
+    })
     @Get('filtrar/org/:idOrg/estado/:st')
     async getByOrgBySt(@Param('idOrg',ParseIntPipe) idOrg:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
         const data = await this.personaService.getByOrgByST(idOrg,st)

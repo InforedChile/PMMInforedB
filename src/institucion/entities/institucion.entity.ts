@@ -94,7 +94,7 @@ export class Institucion{
         type: 'varchar',
         length: 300,
         collation: 'latin1_swedish_ci',
-        nullable: false
+        default: ''
     })
     tags: string; // podria asignarse automatico, si no ver como lo asigna infored
 
@@ -331,7 +331,8 @@ export class Institucion{
     @Column({
         type: 'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci'
+        collation: 'latin1_swedish_ci',
+        default: ''
     })
     twitter: string;
 
@@ -339,7 +340,8 @@ export class Institucion{
     @Column({
         type: 'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci'
+        collation: 'latin1_swedish_ci',
+        default: ''
     })
     facebook: string;
 
@@ -374,6 +376,14 @@ export class Institucion{
         default:0
     })
     errores: number;
+
+    @ApiProperty()
+    @Column({
+        type: 'varchar',
+        default: '',
+        length: 500
+    })
+    observaciones: string;
 
 
 }
