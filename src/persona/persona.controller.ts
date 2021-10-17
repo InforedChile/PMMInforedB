@@ -108,6 +108,16 @@ export class PersonaController {
     @ApiOperation({
         summary: 'Filtra las personas según la organización y el estado'
     })
+    @ApiOkResponse({
+        description: 'Lista de personas segun su organizacion y su estado',
+        type: [Persona]
+    })
+    @ApiNotFoundResponse({
+        description: 'No hay personas registradas'
+    })
+    @ApiBadRequestResponse({
+        description: 'Datos entregados en formato erroneo'
+    })
     @Get('filtrar/org/:idOrg/estado/:st')
     async getByOrgBySt(@Param('idOrg',ParseIntPipe) idOrg:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
         const data = await this.personaService.getByOrgByST(idOrg,st)
@@ -118,6 +128,19 @@ export class PersonaController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Filtra las personas según su institución y su estado'
+    })
+    @ApiOkResponse({
+        description: 'Lista de personas filtadas segun su institución y su estado',
+        type: [Persona]
+    })
+    @ApiNotFoundResponse({
+        description: 'No hay personas registradas'
+    })
+    @ApiBadRequestResponse({
+        description: 'Parametros ingresados en formato invalido'
+    })
     @Get('filtrar/inst/:idInt/estado/:st')
     async getByIntBySt(@Param('idInt',ParseIntPipe) idInt:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
         const data = await this.personaService.getByIntByST(idInt,st)
@@ -127,6 +150,8 @@ export class PersonaController {
             data: data
         }
     }
+
+    /* POST */
 
     @Post('add')
     async addPersona(@Body() personaDTO: CreatePersonaDTO){
