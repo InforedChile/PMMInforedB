@@ -176,6 +176,21 @@ export class PersonaController {
         }
     }
 
+    /* PUT */
+
+    @ApiOperation({
+        summary: 'Edita una Persona'
+    })
+    @ApiOkResponse({
+        description: 'Persona editada',
+        type: Persona
+    })
+    @ApiNotFoundResponse({
+        description: "Persona no encontrada"
+    })
+    @ApiBadRequestResponse({
+        description:"Dato ingresado en formato erroneo"
+    })
     @Put('edit/:id')
     async editPersona(@Param('id',ParseIntPipe) idPersona: number,@Body() personaDTO:EditPersonaDTO){
         const data = await this.personaService.editPersona(idPersona,personaDTO)
@@ -186,6 +201,16 @@ export class PersonaController {
         }
     }
 
+    @ApiOperation({
+        summary: 'Elimina una Persona'
+    })
+    @ApiOkResponse({
+        description: 'Persona eliminada correctamente',
+        type: Persona
+    })
+    @ApiNotFoundResponse({
+        description: 'Persona no encontrada'
+    })
     @Delete('delete/:id')
     async deletePersona(@Param('id',ParseIntPipe) idPersona:number){
         const data = await this.personaService.deletePersona(idPersona)

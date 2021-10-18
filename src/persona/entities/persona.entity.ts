@@ -24,11 +24,11 @@ export class Persona {
     @ApiProperty({
         description: 'Identificador de la institucion asociada',
         type: 'int',
-        nullable: true,
+        nullable: false,
     })
     @Column({
         type: 'int',
-        nullable: true
+        nullable: false
     })
     id_institucion: number;
 

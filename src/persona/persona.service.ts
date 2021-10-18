@@ -69,7 +69,7 @@ export class PersonaService {
         if(!bool) throw new BadRequestException(msg)  // formato rut 
         const per = await this.personaRepository.findOne({where:{
             rut: personaDTO.rut,
-            id_organizacion:personaDTO.id_organizacion
+            id_institucion:personaDTO.id_institucion
         }})
         if(per) throw new BadRequestException('Persona ya registrada en la organización') // verifico que no este registrado en la organización
         /* telefono */
@@ -86,9 +86,24 @@ export class PersonaService {
     
     async editPersona(idPersona:number,personaDTO:EditPersonaDTO):Promise<Persona>{
         /* Validaciones */
+        const persona = await this.getOne(idPersona) //existencia
+        /* telefono */
+        if(personaDTO.telefono){
+            const [bool,msg] = validarTelefono(personaDTO.telefono)
+            if (!bool) throw new BadRequestException(msg)
+        }
+        /* institución */
+        
+        if(personaDTO.id_institucion){
+            const inst = await this.institucionService.getById(personaDTO.id_institucion)
+            if(persona.id_organizacion !== inst.id_organizacion ) throw new BadRequestException("Institución debe pertenecer a la organización")
+            const per = await this.personaRepository.findOne({where:{rut:persona.rut,id_institucion:personaDTO.id_institucion}})
+            if(persona.id_institucion !== personaDTO.id_institucion) if(per) throw new BadRequestException('Persona ya registrada en esta institución')
+
+        }
+
 
         /* Editar  */
-        const persona = await this.getOne(idPersona)
         const editPersona = await Object.assign(persona,personaDTO)
         return await this.personaRepository.save(editPersona)
     }

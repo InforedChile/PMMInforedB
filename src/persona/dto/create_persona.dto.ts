@@ -13,10 +13,8 @@ export class CreatePersonaDTO{
 
     @ApiProperty({
         description: 'Identificador de la institucion asociada',
-        nullable: true,
     })
     @IsNumber()
-    @IsOptional()
     id_institucion: number;
 
     @ApiProperty({
