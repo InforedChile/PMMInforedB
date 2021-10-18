@@ -1,7 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoriaService } from 'src/categoria/categoria.service';
-import { BOOL } from 'src/enums';
+import { BOOL, ST } from 'src/enums';
+import { validarTelefono } from 'src/functions';
+import { SubcategoriaService } from 'src/subcategoria/subcategoria.service';
 import { Repository } from 'typeorm';
 import { CreateOrgDTO, EditOrgDTO } from './dto';
 import { Organizacion } from './entities';
@@ -11,7 +13,9 @@ export class OrganizacionService {
     
     constructor( 
         @InjectRepository(Organizacion)
-        private readonly organizacionRepository: Repository<Organizacion>
+        private readonly organizacionRepository: Repository<Organizacion>,
+        private readonly categoriaService: CategoriaService,
+        private readonly subcategoriaService: SubcategoriaService,
     ){}
 
     async getMany():Promise<Organizacion[]>{
@@ -34,8 +38,11 @@ export class OrganizacionService {
 
     async createOne(dto: CreateOrgDTO):Promise<Organizacion>{
         /* Validar Datos */
+        /* Nombre */
+        let org = await this.organizacionRepository.findOne({where:{nombre: dto.nombre}})
+        if ( org ) throw new BadRequestException('Nombre ya registrado') // nombre no debe existir 
         /* Email */
-        const org = await this.organizacionRepository.findOne({where:{correo1:dto.correo1}})
+        org = await this.organizacionRepository.findOne({where:{correo1:dto.correo1}})
         if(org) throw new BadRequestException('Correo electronico ya registrado')
         if(dto.correo1 === dto.correo2) throw new BadRequestException('Correos deben ser distintos')
 
@@ -43,13 +50,20 @@ export class OrganizacionService {
 
         if(dto.telefono1 === dto.telefono2) throw new BadRequestException('Telefonos deben ser distintos')
 
-        if(dto.telefono1.substring(0,3) !=='+56') throw new BadRequestException('Formato de telefono 1 invalido')
+        const [valido,msg] = validarTelefono(dto.telefono1)
+        if(!valido) throw new BadRequestException(`Telefono1:${msg}`)
         if(dto.telefono2){
-            if(dto.telefono2.substring(0,3) !=='+56') throw new BadRequestException('Formato de telefono 2 invalido')
+            const [valido,msg] = validarTelefono(dto.telefono2)
+            if(!valido) throw new BadRequestException(`Telefono2:${msg}`)
         }
-        /* Categoria y Sub Categoria */
+        
+        /* Categoria */
+        const cate = await this.categoriaService.getById(dto.id_publico_cate)
+        if( cate.st_publico_cate === ST.INACTIVO) throw new BadRequestException('Categoria debe estar Activa')
 
-        /* De momento no se validan las categorias y las sub categorias */
+        /* Subcategoria */
+        const subcate = await this.subcategoriaService.getOne(dto.id_publico_cate_sub)
+        if( subcate.st_publico_cate_sub === ST.INACTIVO ) throw new BadRequestException('Subcategoria debe estar activa')
         
         /* Creacion de organizacion */
 
@@ -60,7 +74,61 @@ export class OrganizacionService {
     }
 
     async editOne(idOrg ,dto: EditOrgDTO){
+        /* Validar  */
         const organizacion = await this.getOne(idOrg)
+        /* Nombre */
+        if(dto.nombre){
+            const orgNombre = await this.organizacionRepository.findOne({where:{nombre:dto.nombre}})
+            if(orgNombre && orgNombre.id_organizacion !== organizacion.id_organizacion) throw new BadRequestException('Nombre ya registrado')
+        }
+        /* Correo */
+        if(dto.correo1 && dto.correo2 ){
+            if (dto.correo1 === dto.correo2 ) throw new BadRequestException('Nuevos correos deben ser distintos')
+        } else if(!dto.correo1 && dto.correo2 ){
+            if (dto.correo2 === organizacion.correo1 ) throw new BadRequestException('Correo 2 debe ser distinto a correo 1 ') 
+        } else if(dto.correo1 && !dto.correo2 ) {
+            if (dto.correo1 === organizacion.correo2 ) throw new BadRequestException('Correo 1 debe ser distinto a correo 2')
+        }
+
+        if(dto.correo1){
+            const orgCorreo = await this.organizacionRepository.findOne({where:{correo1:dto.correo1}})
+            if(orgCorreo && orgCorreo.id_organizacion !== organizacion.id_organizacion ) throw new BadRequestException('Nuevo correo 1 ya registado')
+        }
+
+        /* Telefonos */
+        if(dto.telefono1 && dto.telefono2 ){
+            if (dto.telefono1 === dto.telefono2 ) throw new BadRequestException('Nuevos telefonos deben ser distintos')
+        } else if(!dto.telefono1 && dto.telefono2 ){
+            if (dto.telefono2 === organizacion.telefono1 ) throw new BadRequestException('Telefono 2 debe ser distinto a telefono 1 ') 
+        } else if(dto.telefono1 && !dto.telefono2 ) {
+            if (dto.telefono1 === organizacion.telefono2 ) throw new BadRequestException('Telefono 1 debe ser distinto a Telefono 2')
+        }
+
+        if(dto.telefono1){
+            const [valido,msg] = validarTelefono(dto.telefono1)
+            if(!valido) throw new BadRequestException(`Telefono1:${msg}`)
+        }
+
+        if(dto.telefono2){
+            const [valido,msg] = validarTelefono(dto.telefono2)
+            if(!valido) throw new BadRequestException(`Telefono2:${msg}`)
+        }
+
+        /* Categoria */
+        if(dto.id_publico_cate){
+            const cate = await this.categoriaService.getById(dto.id_publico_cate)
+            if(cate.st_publico_cate === ST.INACTIVO) throw new BadRequestException('Categoria debe estar activa')
+        }
+
+        /* Sub Categoria */
+        if(dto.id_publico_cate_sub){
+            const subCate = await this.subcategoriaService.getOne(dto.id_publico_cate_sub)
+            if(subCate.st_publico_cate_sub === ST.INACTIVO ) throw new BadRequestException('Subcategoria debe estar activa')
+        }
+
+
+
+        /* Editar  */
         const editOrg = Object.assign(organizacion,dto)
         return await this.organizacionRepository.save(editOrg)
 

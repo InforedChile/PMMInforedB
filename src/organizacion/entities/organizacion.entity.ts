@@ -15,7 +15,8 @@ export class Organizacion{
     @ApiProperty({
         description:'Nombre de la organización',
         type: 'varchar',
-        nullable: false
+        nullable: false,
+        maxLength: 50
     })
     @Column({
         type: 'varchar',

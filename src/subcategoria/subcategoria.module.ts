@@ -12,6 +12,7 @@ import { SubcategoriaService } from './subcategoria.service';
     CategoriaModule
   ],
   controllers: [SubcategoriaController],
-  providers: [SubcategoriaService]
+  providers: [SubcategoriaService],
+  exports: [SubcategoriaService]
 })
 export class SubcategoriaModule {}

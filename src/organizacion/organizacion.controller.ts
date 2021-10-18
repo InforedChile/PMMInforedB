@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BOOL } from 'src/enums';
 import { CreateOrgDTO, EditOrgDTO } from './dto';
 import { Organizacion } from './entities';
@@ -11,22 +11,18 @@ export class OrganizacionController {
     constructor(
         private readonly organizacionService: OrganizacionService
     ){}
-    
+   
+    /* Get */
+
     @ApiOperation({
         summary: 'Entrega la lista de organizaciones registradas'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Lista de organizaciones',
-        status: 200,
         type:[Organizacion]
     })
-    @ApiResponse({
-        description: 'No hay organizaciones registradas',
-        status: 404,
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500,
+    @ApiBadRequestResponse({
+        description: 'No hay organizaciones registradas'
     })
     @Get()
     async getMany(){
@@ -41,18 +37,15 @@ export class OrganizacionController {
     @ApiOperation({
         summary: 'Entrega la organización solicitada según su id'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Organizacion solicitada',
-        status: 200,
         type: Organizacion
     })
-    @ApiResponse({
+    @ApiNotFoundResponse({
         description: 'Organización no encontrada',
-        status: 404,
     })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500,
+    @ApiBadRequestResponse({
+        description: 'Id Organización entregada en formato invalido'
     })
     @Get('/ver/:id')
     async getOne(@Param('id',ParseIntPipe) idOrg:number ){
@@ -67,18 +60,15 @@ export class OrganizacionController {
     @ApiOperation({
         summary: 'Entrega la lista de organizaciones filtrandolas segun su estatus de autorizadas o no.'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Lista de organizaciones',
-        status: 200,
         type:[Organizacion]
     })
-    @ApiResponse({
+    @ApiBadRequestResponse({
         description: 'Parametro incorrecto',
-        status: 400,
     })
-    @ApiResponse({
+    @ApiNotFoundResponse({
         description: 'No hay organizaciones registradas con ese estado',
-        status: 404,
     })
     @ApiResponse({
         description: 'Internal server error',
@@ -94,21 +84,17 @@ export class OrganizacionController {
         }
     }
 
+    /* POST */
+
     @ApiOperation({
         summary:'Agrega una Organizacion a la Base de Datos'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Organizacion creada correctamente',
-        status: 201,
         type: Organizacion
     })
-    @ApiResponse({
+    @ApiBadRequestResponse({
         description: 'Error de ingreso de parametros',
-        status: 400,
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500,
     })
     @Post('add')
     async createOne(@Body() dtoOrg: CreateOrgDTO){
@@ -120,8 +106,21 @@ export class OrganizacionController {
         }
     }
 
+
+    /* PUT */
+
     @ApiOperation({
         summary: 'Edita la informacion de una organización'   
+    })
+    @ApiOkResponse({
+        description: 'Actualiza una organización',
+        type: Organizacion
+    })
+    @ApiBadRequestResponse({
+        description: 'Datos ingresados en formato invalido'
+    })
+    @ApiNotFoundResponse({
+        description: 'Organización no encontrada'
     })
     @Put('/edit/:idOrg')
     async editOne(@Param('idOrg',ParseIntPipe) idOrg:number , @Body() dtoOrg: EditOrgDTO){
@@ -133,8 +132,19 @@ export class OrganizacionController {
         }
     }
 
+    /* Delete */
+
     @ApiOperation({
         summary: 'Elimina una organización'   
+    })
+    @ApiOkResponse({
+        description: 'Organización Eliminada'
+    })
+    @ApiBadRequestResponse({
+        description: 'Id ingresada en formato invalido'
+    })
+    @ApiNotFoundResponse({
+        description: 'Organización no encontrada'
     })
     @Delete('/delete/:idOrg')
     async deleteOne(@Param('idOrg',ParseIntPipe) idOrg:number){
