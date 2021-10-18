@@ -6,15 +6,13 @@ export class CreatePersonaDTO{
 
 
     @ApiProperty({
-        description: 'id de la organizacion asociada ',
-        type: 'int',
+        description: 'id de la organizacion asociada '
     })
     @IsNumber()
     id_organizacion: number;
 
     @ApiProperty({
         description: 'Identificador de la institucion asociada',
-        type: 'int',
         nullable: true,
     })
     @IsNumber()
@@ -94,7 +92,8 @@ export class CreatePersonaDTO{
     @ApiProperty({
         description: 'Telefono de contacto',
         nullable: true,
-        maxLength: 20
+        maxLength: 20,
+        example: '+5612345678'
     })
     @IsString()
     @IsOptional()

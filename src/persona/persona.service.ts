@@ -1,6 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ST } from 'src/enums';
+import { validarRut } from 'src/functions';
+import { validarTelefono } from 'src/functions';
+import { InstitucionService } from 'src/institucion/institucion.service';
+import { OrganizacionService } from 'src/organizacion/organizacion.service';
 import { Repository } from 'typeorm';
 import { CreatePersonaDTO } from './dto';
 import { EditPersonaDTO } from './dto/edit_persona.dto';
@@ -10,7 +14,9 @@ import { Persona } from './entities';
 export class PersonaService {
     constructor(
         @InjectRepository(Persona)
-        private readonly personaRepository: Repository<Persona>
+        private readonly personaRepository: Repository<Persona>,
+        private readonly organizacionService: OrganizacionService,
+        private readonly institucionService: InstitucionService
     ){}
 
     async getMany():Promise<Persona[]>{
@@ -51,7 +57,28 @@ export class PersonaService {
 
     async addPersona(personaDTO:CreatePersonaDTO):Promise<Persona>{
         /* Validadaciones */
-        
+        /* organizacion */
+        await this.organizacionService.getOne(personaDTO.id_organizacion)
+        /* institución */
+        if(personaDTO.id_institucion){
+            const inst = await this.institucionService.getById(personaDTO.id_institucion)
+            if(inst.id_organizacion !== personaDTO.id_organizacion) throw new BadRequestException('La institución indicada no pertenece a la organización indicada')
+        }
+        /* rut */
+        const [bool,msg] = validarRut(personaDTO.rut) 
+        if(!bool) throw new BadRequestException(msg)  // formato rut 
+        const per = await this.personaRepository.findOne({where:{
+            rut: personaDTO.rut,
+            id_organizacion:personaDTO.id_organizacion
+        }})
+        if(per) throw new BadRequestException('Persona ya registrada en la organización') // verifico que no este registrado en la organización
+        /* telefono */
+        if(personaDTO.telefono){
+            const [bool,msg] = validarTelefono(personaDTO.telefono)
+            if(!bool) throw new BadRequestException(msg)
+        }
+
+        /* Crear */
         const newPersona = await this.personaRepository.create(personaDTO)
         const persona = await this.personaRepository.save(newPersona)
         return persona
@@ -60,6 +87,7 @@ export class PersonaService {
     async editPersona(idPersona:number,personaDTO:EditPersonaDTO):Promise<Persona>{
         /* Validaciones */
 
+        /* Editar  */
         const persona = await this.getOne(idPersona)
         const editPersona = await Object.assign(persona,personaDTO)
         return await this.personaRepository.save(editPersona)

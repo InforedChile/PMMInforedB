@@ -153,6 +153,19 @@ export class PersonaController {
 
     /* POST */
 
+    @ApiOperation({
+        summary: 'Crea personas'
+    })
+    @ApiOkResponse({
+        description: 'Persona creada',
+        type: Persona
+    })
+    @ApiNotFoundResponse({
+        description: 'Organizacion o institucion no encontrada'
+    })
+    @ApiBadRequestResponse({
+        description: 'Datos ingresados en formato invalido'
+    })
     @Post('add')
     async addPersona(@Body() personaDTO: CreatePersonaDTO){
         const data = await this.personaService.addPersona(personaDTO)

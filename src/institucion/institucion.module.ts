@@ -9,6 +9,7 @@ import { InstitucionService } from './institucion.service';
     TypeOrmModule.forFeature([Institucion])
   ],
   controllers: [InstitucionController],
-  providers: [InstitucionService]
+  providers: [InstitucionService],
+  exports: [InstitucionService]
 })
 export class InstitucionModule {}
