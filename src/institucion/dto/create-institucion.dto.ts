@@ -216,7 +216,8 @@ export class CreateInstitucionDTO{
         description: 'Plantilla de visualización de personas ',
         nullable: true
     })
-    @IsNumber()
     @IsOptional()
+    @IsNumber()
+    @Min(1)  
     id_plantilla: number;
 }

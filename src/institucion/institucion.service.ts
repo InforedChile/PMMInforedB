@@ -1,7 +1,12 @@
 import { BadRequestException, NotAcceptableException, NotImplementedException } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ST } from 'src/enums';
+import { CiudadService } from 'src/ciudad/ciudad.service';
+import { BOOL, ST } from 'src/enums';
+import { validarCoord, validarTelefono } from 'src/functions';
+import { OrganizacionService } from 'src/organizacion/organizacion.service';
+import { PlantillaService } from 'src/plantilla/plantilla.service';
+import { SubcategoriaService } from 'src/subcategoria/subcategoria.service';
 import { Repository } from 'typeorm';
 import { CreateInstitucionDTO, EditInstitucionDTO } from './dto';
 import { Institucion } from './entities';
@@ -10,8 +15,14 @@ import { Institucion } from './entities';
 export class InstitucionService {
     constructor(
         @InjectRepository(Institucion)
-        private readonly institucionRepository : Repository<Institucion>
+        private readonly institucionRepository : Repository<Institucion>,
+        private readonly subcategoriaService: SubcategoriaService,
+        private readonly ciudadService: CiudadService,
+        private readonly organizacionService: OrganizacionService,
+        private readonly plantillaService: PlantillaService
     ){}
+
+
     async getMany():Promise<Institucion[]>{
         const data = await this.institucionRepository.find()
         if(data.length === 0) throw new NotFoundException('No hay intituciones registradas')
@@ -38,14 +49,62 @@ export class InstitucionService {
 
     async createOne(dto: CreateInstitucionDTO){
         /* Validacion de datos */
+        /* Subcategoria */
+        const subcate = await this.subcategoriaService.getOne(dto.id_publico_cate_sub)
+        if(subcate.st_publico_cate_sub === ST.INACTIVO ) throw new BadRequestException('Subcategoria debe estar activo')
+        /* Ciudad */
+        const ciudad = await this.ciudadService.getById(dto.id_ciudad)
+        if(ciudad.st_ciudad === ST.INACTIVO) throw new BadRequestException('Ciudad debe estar activa')
+        /* Titulo */
+        const instTit = await this.institucionRepository.findOne({where:{titulo_institucion:dto.titulo_institucion}})
+        if(instTit) throw new BadRequestException('Institución ya registrada')
+        /* Coord */
+        /* Latitud */
+        let lat = false;
+        if(dto.latitud){
+            lat = true;
+            const [validacion,msg] = validarCoord(dto.latitud)
+            if(!validacion) throw new BadRequestException(`Latitud: ${msg}`)
+        }
+        /* Longitud */
+        let lon = false;
+        if(dto.longitud){
+            lon = true;
+            const [validacion,msg] = validarCoord(dto.longitud)
+            if(!validacion) throw new BadRequestException(`Longitud: ${msg}`)
+        } 
+        /* 2 o nada */
+        if((!lat && lon) || (lat && !lon)) throw new BadRequestException('Se deben ingresar ambas coordenadas, o no se debe ingresar ninguna')
+        /* Telefonos */
+        if(dto.telefono1 === dto.telefono2 ) throw new BadRequestException('Telefonos deben ser distintos')
+        const [valTel,msgTel] = validarTelefono(dto.telefono1)
+        if(!valTel) throw new BadRequestException(`Telefono1: ${msgTel}`) 
+        if(dto.telefono2){
+            const [valTel,msgTel] = validarTelefono(dto.telefono2)
+            if(!valTel) throw new BadRequestException(`Telefono2: ${msgTel}`)
+        }
+
         //Correo
         if(dto.email1===dto.email2) throw new BadRequestException(['Correos electronicos deben ser distintos'])
-        //Telefono
-        if(dto.telefono1==dto.telefono2) throw new BadRequestException(['Telefonos deben ser distintos'])
-        if(dto.telefono1.substring(0,3)!=="+56") throw new BadRequestException(['Formato de Telefono debe ser +56XXXXXXXXX'])
-        if(dto.telefono2){
-            if(dto.telefono2.substring(0,3)!=="+56") throw new BadRequestException(['Formato de Telefono debe ser +56XXXXXXXXX'])
+
+        /* Twitter */
+        if(dto.twitter){
+            if(!dto.twitter.includes('https://twitter.com/')) throw new BadRequestException('Link ingresado no es de twitter')
         }
+        /* Facebook */
+        if(dto.facebook){ 
+            if(!dto.facebook.includes('https://www.facebook.com')) throw new BadRequestException('Link ingresado no es de facebook')
+        }
+        /* Organización */
+        const org = await this.organizacionService.getOne(dto.id_organizacion);
+        if(org.auth === BOOL.NO) throw new BadRequestException('Organización no está autorizada ');
+        
+        /* Organización */
+        if(dto.id_plantilla >= 0){
+            const plan = await this.plantillaService.getOne(dto.id_plantilla)
+            if(org.id_organizacion !== plan.id_organizacion) throw new BadRequestException('Plantilla no pertenece a la organización indicada')
+        }
+    
         /* Creacion de institucion */
         const newInstitucion =await  this.institucionRepository.create(dto)
         newInstitucion.fecha_crea=new Date();

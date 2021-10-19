@@ -11,6 +11,7 @@ import { PlantillaService } from './plantilla.service';
     OrganizacionModule
   ],
   controllers: [PlantillaController],
-  providers: [PlantillaService]
+  providers: [PlantillaService],
+  exports: [PlantillaService]
 })
 export class PlantillaModule {}

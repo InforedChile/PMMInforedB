@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from "@nestjs/swagger";
-import { IsDate, IsDateString, IsEnum, IsNumber, IsOptional, Min } from "class-validator";
+import { IsDate, IsDateString, IsEnum, IsNumber, IsOptional, IsString, MaxLength, Min } from "class-validator";
 import { BOOL, ST } from "src/enums";
 import { CreateInstitucionDTO } from "./create-institucion.dto";
 
@@ -40,4 +40,16 @@ export class EditInstitucionDTO extends PartialType(CreateInstitucionDTO){
     @IsOptional()
     @Min(0)
     errores:number;
+
+    @ApiProperty({
+        description: 'Observaciones de ultimo momento',
+        type: 'varchar',
+        maxLength: 500,
+        nullable: true
+    })
+    @IsString()
+    @IsOptional()
+    @MaxLength(500)
+    observaciones: string; // Se agrega
+
 }

@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ST } from 'src/enums';
 import { CreateInstitucionDTO, EditInstitucionDTO } from './dto';
 import { Institucion } from './entities';
@@ -12,21 +12,17 @@ export class InstitucionController {
         private readonly institucionService: InstitucionService
     ){}
 
+    /* GET */
+
     @ApiOperation({
         summary: 'Enlista instituciones registradas del sistema'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Lista de instituciones registradas',
-        status: 200,
         type: [Institucion]
     })
-    @ApiResponse({
+    @ApiNotFoundResponse({
         description: 'No hay instituciones registradas',
-        status: 404
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500
     })
     @Get()
     async getMany(){
@@ -41,22 +37,15 @@ export class InstitucionController {
     @ApiOperation({
         summary: 'Entrega los datos de una sola institución'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Institucion encontrada',
-        status: 200,
         type: Institucion
     })
-    @ApiResponse({
-        description: 'ID ingresada erronea ',
-        status: 400
+    @ApiBadRequestResponse({
+        description: 'ID ingresada erronea '
     })
-    @ApiResponse({
+    @ApiNotFoundResponse({
         description: 'No se encuentra la institucion solicitada',
-        status: 404
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500
     })
     @Get('ver/:id')
     async getOne(@Param('id',ParseIntPipe) idInst:number){
@@ -71,22 +60,15 @@ export class InstitucionController {
     @ApiOperation({
         summary: 'Entrega las instituciones asociadas a una sola organización'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Lista de instituciones asociadas a la organizacion solicitada',
-        status: 200,
         type: [Institucion]
     })
-    @ApiResponse({
+    @ApiBadRequestResponse({
         description: 'ID ingresada erronea ',
-        status: 400
     })
-    @ApiResponse({
+    @ApiNotFoundResponse({
         description: 'No hay instituciones asociadas a la organizacion solicitada',
-        status: 404
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500
     })
     @Get('filtrar/org/:id')
     async getByOrg(@Param('id',ParseIntPipe) idOrg:number){
@@ -101,22 +83,15 @@ export class InstitucionController {
     @ApiOperation({
         summary: 'Entrega las instituciones asociadas a una sola organización según su estado'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Lista de instituciones asociadas a la organizacion solicitada',
-        status: 200,
         type: [Institucion]
     })
-    @ApiResponse({
+    @ApiBadRequestResponse({
         description: 'ID ingresada erronea, estado ingresado erroneo',
-        status: 400
     })
-    @ApiResponse({
-        description: 'No hay instituciones asociadas a la organizacion solicitada con el estado indicado',
-        status: 404
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500
+    @ApiNotFoundResponse({
+        description: 'No hay instituciones asociadas a la organizacion solicitada con el estado indicado'
     })
     @Get('filtrar/org/:id/estado/:st')
     async getByOrgBySt(@Param('id',ParseIntPipe) idOrg:number,@Param('st',new ParseEnumPipe(ST)) st:ST){
@@ -128,27 +103,26 @@ export class InstitucionController {
         }
     }
 
-
+    /* POST */
 
     @ApiOperation({
         summary: 'Agrega nuevas instituciones a la base de datos'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Institucion nueva',
-        status: 201,
         type: Institucion
     })
-    @ApiResponse({
+    @ApiBadRequestResponse({
         description: 'Datos erroneos',
-        status: 400
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500
     })
     @Post('add')
-    addOne(@Body() crearDTO:CreateInstitucionDTO){
-        const data = this.institucionService.createOne(crearDTO)
+    async addOne(@Body() crearDTO:CreateInstitucionDTO){
+        const data = await this.institucionService.createOne(crearDTO)
+        return {
+            status: 200,
+            message: 'OK',
+            data: data
+        }
     }
 
     @ApiOperation({
