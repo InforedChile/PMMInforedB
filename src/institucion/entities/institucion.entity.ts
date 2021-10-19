@@ -21,7 +21,6 @@ export class Institucion{
     })
     @Column({
         type: 'int',
-        nullable: false,
         default: 0 // se deja en 0 puesto que no se comprende su rol.
     })
     id_usuario: number;
@@ -52,8 +51,7 @@ export class Institucion{
         type: 'datetime'
     })
     @Column({
-        type:'datetime',
-        nullable: false
+        type:'datetime'
     })
     fecha_crea: Date;
 
@@ -87,7 +85,8 @@ export class Institucion{
 
     @ApiProperty({
         description: 'Tags del aviso',
-        type: 'varchar'
+        type: 'varchar',
+        nullable: true,
     })
     @Column({
         name: 'tags_aviso',
@@ -96,7 +95,7 @@ export class Institucion{
         collation: 'latin1_swedish_ci',
         default: ''
     })
-    tags: string; // podria asignarse automatico, si no ver como lo asigna infored
+    tags: string; // Discrepa con infored ..
 
     @ApiProperty({
         description:'Dirección ',
@@ -109,16 +108,14 @@ export class Institucion{
         type:'varchar',
         length: 200,
         collation: 'latin1_swedish_ci',
-        nullable: false,
         default: ''
     })
-    direccion: string;
+    direccion: string; // Discrepa con infored ..
 
     @ApiProperty({
         description: 'Resumen',
         type: 'varchar',
         maxLength: 200
-
     })
     @Column({
         name: 'descripcion_corta',
@@ -138,7 +135,7 @@ export class Institucion{
         type: 'int',
         default: 0
     })
-    precio1: number;
+    precio1: number; // Discrepa con infored ..
 
     @ApiProperty({
         description: 'Precio',
@@ -149,7 +146,7 @@ export class Institucion{
         type: 'int',
         default: 0
     })
-    precio2: number;
+    precio2: number; // Discrepa con infored ..
 
     @ApiProperty({
         description: '??',
@@ -159,9 +156,9 @@ export class Institucion{
     @Column({
         type: 'text',
         collation: 'latin1_swedish_ci',
-        nullable: false
+        default: null
     })
-    google_maps: string;
+    google_maps: string; // Discrepa con infored ..
 
     @ApiProperty({
         description:'Latitud',
@@ -175,11 +172,11 @@ export class Institucion{
         collation:'latin1_swedish_ci',
         default: ''
     })
-    latitud: string;
+    latitud: string; // Discrepa con infored ..
 
     @ApiProperty({
         description: 'Longitud',
-        type: 'text',
+        type: 'varchar',
         maxLength:50,
         default: ''
     })
@@ -189,12 +186,13 @@ export class Institucion{
         collation:'latin1_swedish_ci',
         default: ''
     })
-    longitud: string;
+    longitud: string; // Discrepa con infored ..
 
     @ApiProperty({
         description: 'Pagina web del aviso',
         type: 'varchar',
-        nullable: false
+        nullable: false,
+        maxLength: 150
     })
     @Column({
         name: 'sitio_web_aviso',
@@ -203,12 +201,13 @@ export class Institucion{
         collation: 'latin1_swedish_ci',
         default: ''
     })
-    web: string;
+    web: string; // Discrepa con infored ..
 
     @ApiProperty({
         description: 'Video del aviso',
         type: 'varchar',
-        default:''
+        default:'',
+        maxLength: 200
     })
     @Column({
         name:'video_aviso',
@@ -217,13 +216,14 @@ export class Institucion{
         collation: 'latin1_swedish_ci',
         default: ''
     })
-    video: string;
+    video: string; // Discrepa con infored ..
 
     @ApiProperty({
         description: 'Telefono 1',
-        type: 'text',
+        type: 'varchar',
         example: '+56XXXXXXXXX',
-        nullable: false
+        nullable: false,
+        maxLength: 150
     })
     @Column({
         name: 'fono_aviso',
@@ -247,7 +247,7 @@ export class Institucion{
         collation: 'latin1_swedish_ci',
         default:''
     })
-    telefono2: string;
+    telefono2: string; // Discrepa con infored ..
 
     @ApiProperty({
         description: 'Correo Electronico 1',
@@ -277,7 +277,7 @@ export class Institucion{
         collation: 'latin1_swedish_ci',
         default:''
     })
-    email2: string;
+    email2: string; // Discrepa con infored ..
 
     @ApiProperty({
         description: 'Horario de Atención',
@@ -325,65 +325,96 @@ export class Institucion{
         type: 'datetime',
         default: null
     })
-    fecha_destacado: Date;
+    fecha_destacado: Date; // Discrepa con infored ..
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Twitter de la institución',
+        nullable: true,
+        maxLength: 200
+    })
     @Column({
         type: 'varchar',
         length: 200,
         collation: 'latin1_swedish_ci',
         default: ''
     })
-    twitter: string;
+    twitter: string; // Discrepa con infored ..
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Facebook de la institución',
+        nullable: true,
+        type: 'varchar',
+        maxLength: 200,
+    })
     @Column({
         type: 'varchar',
         length: 200,
         collation: 'latin1_swedish_ci',
         default: ''
     })
-    facebook: string;
+    facebook: string; // Discrepa con infored ..
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica el estado de la institución si activo o no',
+        type: 'enum',
+        enum: ST,
+        example: ST.ACTIVO,
+        nullable: true
+    })
     @Column({
         name: 'st_publico_aviso',
         type:'enum',
         enum: ST,
         default: ST.ACTIVO,
-        collation:'latin1_swedish_ci',
-        nullable:false       
+        collation:'latin1_swedish_ci'      
     })
     st_institucion: ST;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica la organización administradora',
+        type: 'int',
+        nullable: true
+    })
     @Column({
         type: 'int',
         nullable: true,
     })
-    id_organizacion: number;
+    id_organizacion: number; // Se agrega
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica la plantilla utilizada para la visualización de los datos de personas',
+        type: 'int',
+        nullable: true
+    })
     @Column({
         type: 'int',
         nullable: true,
     })
-    id_plantilla: number;
+    id_plantilla: number; // Se agrega
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Indica numero de veces que el aviso fue marcado como erroneo, sobre 10 se pasa a inactivo',
+        type: 'int',
+        nullable: true
+    })
     @Column({
         type: 'int',
         default:0
     })
-    errores: number;
+    errores: number; // Se agrega
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Observaciones de ultimo momento',
+        type: 'varchar',
+        maxLength: 500,
+        nullable: true
+    })
     @Column({
         type: 'varchar',
         default: '',
         length: 500
     })
-    observaciones: string;
+    observaciones: string; // Se agrega
 
 
 }
