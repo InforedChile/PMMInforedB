@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsEnum, IsNumber, IsOptional, IsString, MaxLength, MinLength } from "class-validator"
+import { IsEnum, IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator"
 import { BOOL } from "src/enums"
 
 export class CreatePlantillaDTO{
@@ -8,6 +8,7 @@ export class CreatePlantillaDTO{
         description: 'Id de la organizacion asociada'
     })
     @IsNumber()
+    @Min(1)
     id_organizacion: number
 
     @ApiProperty({
