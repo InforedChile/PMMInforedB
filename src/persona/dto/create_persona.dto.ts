@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsEnum, IsNumber, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
 import { ST } from "src/enums";
 
 export class CreatePersonaDTO{
@@ -9,12 +9,14 @@ export class CreatePersonaDTO{
         description: 'id de la organizacion asociada '
     })
     @IsNumber()
+    @Min(1)
     id_organizacion: number;
 
     @ApiProperty({
         description: 'Identificador de la institucion asociada',
     })
     @IsNumber()
+    @Min(1)
     id_institucion: number;
 
     @ApiProperty({

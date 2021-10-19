@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsInt, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsInt, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
 
 export class CreateOrgDTO{
 
@@ -81,6 +81,7 @@ export class CreateOrgDTO{
     })
     @IsInt()
     @IsOptional()
+    @Min(1)
     id_publico_cate: number;
 
     @ApiProperty({
@@ -88,6 +89,7 @@ export class CreateOrgDTO{
     })
     @IsInt()
     @IsOptional()
+    @Min(1)
     id_publico_cate_sub: number;
 
 }

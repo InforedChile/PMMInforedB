@@ -99,7 +99,7 @@ export class InstitucionService {
         const org = await this.organizacionService.getOne(dto.id_organizacion);
         if(org.auth === BOOL.NO) throw new BadRequestException('Organización no está autorizada ');
         
-        /* Organización */
+        /* Plantilla */
         if(dto.id_plantilla >= 0){
             const plan = await this.plantillaService.getOne(dto.id_plantilla)
             if(org.id_organizacion !== plan.id_organizacion) throw new BadRequestException('Plantilla no pertenece a la organización indicada')
@@ -114,6 +114,100 @@ export class InstitucionService {
 
     async editOne(idInst:number,editDTO:EditInstitucionDTO):Promise<Institucion>{
         const institucion = await this.getById(idInst)
+        /* Verificar */
+        /* Subcategoria */
+        if(editDTO.id_publico_cate_sub){
+            const scate = await this.subcategoriaService.getOne(editDTO.id_publico_cate_sub)
+            if(scate.st_publico_cate_sub === ST.INACTIVO) throw new BadRequestException('Subcategoria debe estar activa')
+        }   
+        /* Ciudad */ 
+        if(editDTO.id_ciudad){
+            const ciudad = await this.ciudadService.getById(editDTO.id_ciudad)
+            if(ciudad.st_ciudad === ST.INACTIVO) throw new BadRequestException('Ciudad debe estar activa')
+        }
+        /* Titulo */
+
+        if (editDTO.titulo_institucion){
+            const instTit = await this.institucionRepository.findOne({where:{titulo_institucion:editDTO.titulo_institucion}})
+            if(instTit && instTit.id_institucion !== institucion.id_institucion) throw new BadRequestException('Institución ya registrada')
+        }
+
+        /* Coord */
+        /* Latitud */
+        let lat = false;
+        if(editDTO.latitud){
+            lat = true;
+            const [validacion,msg] = validarCoord(editDTO.latitud)
+            if(!validacion) throw new BadRequestException(`Latitud: ${msg}`)
+        }
+        /* Longitud */
+        let lon = false;
+        if(editDTO.longitud){
+            lon = true;
+            const [validacion,msg] = validarCoord(editDTO.longitud)
+            if(!validacion) throw new BadRequestException(`Longitud: ${msg}`)
+        } 
+        /* 2 o nada */
+        if((!lat && lon) || (lat && !lon)) throw new BadRequestException('Se deben ingresar ambas coordenadas, o no se debe ingresar ninguna')
+        /* Telefonos */
+        if(editDTO.telefono1 && editDTO.telefono2 ){
+            if (editDTO.telefono1 === editDTO.telefono2 ) throw new BadRequestException('Nuevos telefonos deben ser distintos')
+        } else if(!editDTO.telefono1 && editDTO.telefono2 ){
+            if (editDTO.telefono2 === institucion.telefono1 ) throw new BadRequestException('Telefono 2 debe ser distinto a telefono 1 ') 
+        } else if(editDTO.telefono1 && !editDTO.telefono2 ) {
+            if (editDTO.telefono1 === institucion.telefono2 ) throw new BadRequestException('Telefono 1 debe ser distinto a Telefono 2')
+        }
+
+        if(editDTO.telefono1){
+            const [valido,msg] = validarTelefono(editDTO.telefono1)
+            if(!valido) throw new BadRequestException(`Telefono1:${msg}`)
+        }
+
+        if(editDTO.telefono2){
+            const [valido,msg] = validarTelefono(editDTO.telefono2)
+            if(!valido) throw new BadRequestException(`Telefono2:${msg}`)
+        }
+        
+        /* Correo */
+        if(editDTO.email1 && editDTO.email2 ){
+            if (editDTO.email1 === editDTO.email2 ) throw new BadRequestException('Nuevos correos deben ser distintos')
+        } else if(!editDTO.email1 && editDTO.email2 ){
+            if (editDTO.email2 === institucion.email1 ) throw new BadRequestException('Correo 2 debe ser distinto a correo 1 ') 
+        } else if(editDTO.email1 && !editDTO.email2 ) {
+            if (editDTO.email1 === institucion.email2 ) throw new BadRequestException('Correo 1 debe ser distinto a correo 2')
+        }
+
+        if(editDTO.email1){
+            const instEmail = await this.institucionRepository.findOne({where:{email1: editDTO.email1}})
+            if(instEmail && instEmail.id_institucion !== institucion.id_institucion) throw new BadRequestException('Correo ya registrado')
+        }
+
+        /* Twitter */
+        if(editDTO.twitter){
+            if(!editDTO.twitter.includes('https://twitter.com/')) throw new BadRequestException('Link ingresado no es de twitter')
+        }
+        /* Facebook */
+        if(editDTO.facebook){ 
+            if(!editDTO.facebook.includes('https://www.facebook.com')) throw new BadRequestException('Link ingresado no es de facebook')
+        }
+        if(editDTO.id_organizacion){
+            const org = await this.organizacionService.getOne(editDTO.id_organizacion);
+            if(org.auth === BOOL.NO) throw new BadRequestException('Organización no está autorizada ');
+        
+        }
+        /* Organización */
+        if(editDTO.id_plantilla >= 0){
+            const plan = await this.plantillaService.getOne(editDTO.id_plantilla)
+            if(editDTO.id_organizacion !== plan.id_organizacion) throw new BadRequestException('Plantilla no pertenece a la organización indicada')
+        }
+        if(editDTO.errores>10){
+            editDTO.st_institucion= ST.INACTIVO
+        }
+
+
+
+        /* Editar */
+        
         const editInst = Object.assign(institucion,editDTO)
         return await this.institucionRepository.save(editInst)
     }

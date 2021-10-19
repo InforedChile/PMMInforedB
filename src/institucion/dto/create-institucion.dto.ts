@@ -15,12 +15,14 @@ export class CreateInstitucionDTO{
         description: 'Subcategoria de la institución'
     })
     @IsNumber()
+    @Min(1)
     id_publico_cate_sub: number;
 
     @ApiProperty({
         description: 'Id ciudad institución'
     })
     @IsNumber()
+    @Min(1)
     id_ciudad: number;
 
     @ApiProperty({
@@ -210,6 +212,7 @@ export class CreateInstitucionDTO{
         nullable: false
     })
     @IsNumber()
+    @Min(1)
     id_organizacion: number;
 
     @ApiProperty({

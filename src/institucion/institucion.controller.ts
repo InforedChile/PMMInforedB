@@ -128,22 +128,15 @@ export class InstitucionController {
     @ApiOperation({
         summary: 'Edita los datos de una institucion'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Institucion editada',
-        status: 200,
         type: Institucion
     })
-    @ApiResponse({
+    @ApiBadRequestResponse({
         description: 'Datos erroneos',
-        status: 400
     })
-    @ApiResponse({
-        description: 'Institucion no encontrada',
-        status: 404
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500
+    @ApiNotFoundResponse({
+        description: 'Institucion no encontrada'
     })
     @Put('/edit/:id')
     async editOne(@Param('id',ParseIntPipe) idInst:number,@Body() editDTO: EditInstitucionDTO){
@@ -158,18 +151,13 @@ export class InstitucionController {
     @ApiOperation({
         summary: 'Elimina una insritucion'
     })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Institucion eliminada',
         status: 200,
         type: Institucion
     })
-    @ApiResponse({
-        description: 'Institucion no encontrada',
-        status: 404
-    })
-    @ApiResponse({
-        description: 'Internal server error',
-        status: 500
+    @ApiNotFoundResponse({
+        description: 'Institucion no encontrada'
     })
     @Delete('/delete/:id')
     deleteOne(@Param('id',ParseIntPipe) idInst:number){
