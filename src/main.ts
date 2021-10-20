@@ -14,7 +14,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Backend Directorio Digital Interactivo')
-    .setDescription('Descripcion de API')
+    .setDescription('Directorio BackEnd creado para la empresa InforedChile en el marco del Programa de Memorias Multidiciplinarias')
     .setVersion('1.3')
     .build();
   const document = SwaggerModule.createDocument(app, config);
