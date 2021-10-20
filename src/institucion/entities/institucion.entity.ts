@@ -65,7 +65,7 @@ export class Institucion{
         name:'titulo_aviso',
         type: 'varchar',
         length: 300,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         nullable:false
     })
     titulo_institucion: string;
@@ -78,7 +78,7 @@ export class Institucion{
     @Column({
         name: 'descripcion_aviso',
         type: 'text',
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         nullable: false
     })
     descripcion: string;
@@ -92,7 +92,7 @@ export class Institucion{
         name: 'tags_aviso',
         type: 'varchar',
         length: 300,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         default: ''
     })
     tags: string; // Discrepa con infored ..
@@ -107,7 +107,7 @@ export class Institucion{
         name:'direccion_aviso',
         type:'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         default: ''
     })
     direccion: string; // Discrepa con infored ..
@@ -121,7 +121,7 @@ export class Institucion{
         name: 'descripcion_corta',
         type: 'varchar',
         length: 300,
-        collation: 'latin_swedish_ci',
+        //collation: 'latin_swedish_ci',
         nullable: false
     })
     resumen: string;
@@ -155,7 +155,7 @@ export class Institucion{
     })
     @Column({
         type: 'text',
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         default: null
     })
     google_maps: string; // Discrepa con infored ..
@@ -169,7 +169,7 @@ export class Institucion{
     @Column({
         type:'varchar',
         length: 50,
-        collation:'latin1_swedish_ci',
+        //collation:'latin1_swedish_ci',
         default: ''
     })
     latitud: string; // Discrepa con infored ..
@@ -183,7 +183,7 @@ export class Institucion{
     @Column({
         type:'varchar',
         length: 50,
-        collation:'latin1_swedish_ci',
+        //collation:'latin1_swedish_ci',
         default: ''
     })
     longitud: string; // Discrepa con infored ..
@@ -213,7 +213,7 @@ export class Institucion{
         name:'video_aviso',
         type: 'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         default: ''
     })
     video: string; // Discrepa con infored ..
@@ -229,7 +229,7 @@ export class Institucion{
         name: 'fono_aviso',
         type: 'varchar',
         length: 100,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         nullable: false    
     })
     telefono1: string;
@@ -244,7 +244,7 @@ export class Institucion{
         name: 'celu_aviso',
         type: 'varchar',
         length: 100,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         default:''
     })
     telefono2: string; // Discrepa con infored ..
@@ -259,7 +259,7 @@ export class Institucion{
         name: 'email1_aviso',
         type: 'varchar',
         length: 255,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         nullable: false
     })
     email1: string;
@@ -274,7 +274,7 @@ export class Institucion{
         name: 'email2_aviso',
         type: 'varchar',
         length: 50,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         default:''
     })
     email2: string; // Discrepa con infored ..
@@ -287,7 +287,7 @@ export class Institucion{
     @Column({
         type: 'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         nullable: false
     })
     horario_atencion: string;
@@ -335,7 +335,7 @@ export class Institucion{
     @Column({
         type: 'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         default: ''
     })
     twitter: string; // Discrepa con infored ..
@@ -349,7 +349,7 @@ export class Institucion{
     @Column({
         type: 'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         default: ''
     })
     facebook: string; // Discrepa con infored ..

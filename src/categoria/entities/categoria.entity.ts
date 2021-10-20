@@ -16,7 +16,7 @@ export class Categoria{
     @Column({
         type:"varchar",
         length: "200",
-        collation:'latin1_swedish_ci',
+        //collation:'latin1_swedish_ci',
         nullable:false       
     })
     nombre_publico_cate: string;
@@ -27,7 +27,7 @@ export class Categoria{
     @Column({
         type:"varchar",
         length: "200",
-        collation:'latin1_swedish_ci',
+        //collation:'latin1_swedish_ci',
         nullable:false       
         
     })
@@ -48,7 +48,7 @@ export class Categoria{
         type:'enum',
         enum: ST,
         default: ST.ACTIVO,
-        collation:'latin1_swedish_ci',
+        //collation:'latin1_swedish_ci',
         nullable:false       
     })
     st_publico_cate: ST;

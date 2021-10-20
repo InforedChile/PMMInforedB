@@ -46,7 +46,7 @@ export class Ciudad{
         type:'enum',
         enum: ST,
         default: ST.ACTIVO,
-        collation:'utf8_general_ci'
+        //collation:'utf8_general_ci'
     })
     st_ciudad: ST;
 }

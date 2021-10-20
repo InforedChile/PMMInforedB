@@ -32,7 +32,7 @@ export class Subcategoria{
     @Column({
         type: 'varchar',
         length: 200,
-        collation: 'latin1_swedish_ci',
+        //collation: 'latin1_swedish_ci',
         nullable: false
     })
     nombre_publico_cate_sub: string;
@@ -46,7 +46,7 @@ export class Subcategoria{
     @Column({
         type:'varchar',
         length: 200,
-        collation:'latin1_swedish_ci',
+        //collation:'latin1_swedish_ci',
         nullable:false,
         default:''
     })
@@ -63,7 +63,7 @@ export class Subcategoria{
         type:'enum',
         enum: ST,
         default: ST.INACTIVO,
-        collation:'latin1_swedish_ci',
+        //collation:'latin1_swedish_ci',
         nullable:false       
     })
     st_publico_cate_sub: ST;
