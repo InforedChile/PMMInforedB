@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
 
 export class CreateSubcategoriaDTO {
 
@@ -9,6 +9,7 @@ export class CreateSubcategoriaDTO {
         nullable: false
     })
     @IsNumber()
+    @Min(1)
     id_publico_cate: number;
 
     @ApiProperty({
