@@ -12,6 +12,10 @@ async function bootstrap() {
     })
   )
 
+  app.enableCors({
+    origin: '*',
+  })
+
   const config = new DocumentBuilder()
     .setTitle('Backend Directorio Digital Interactivo')
     .setDescription('Directorio BackEnd creado para la empresa InforedChile en el marco del Programa de Memorias Multidiciplinarias')
@@ -25,8 +29,8 @@ async function bootstrap() {
       showRequestDuration:true,
     },
   });
- 
+ // process.env.PORT ||
 
-  await app.listen(process.env.PORT || 3000);
+  await app.listen( process.env.PORT || 4000);
 }
 bootstrap();
