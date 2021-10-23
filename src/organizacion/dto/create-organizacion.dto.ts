@@ -38,7 +38,7 @@ export class CreateOrgDTO{
         maxLength: 50,
         nullable: false,
     })
-    @IsEmail()
+    @IsString()
     @MaxLength(50)
     @MinLength(1)
     correo1: string;
@@ -49,7 +49,7 @@ export class CreateOrgDTO{
         nullable: true,
         maxLength: 50
     })
-    @IsEmail()
+    @IsString()
     @IsOptional()
     @MaxLength(50)
     correo2: string;

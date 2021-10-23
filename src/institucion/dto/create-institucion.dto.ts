@@ -123,7 +123,7 @@ export class CreateInstitucionDTO{
         nullable: true,
         maxLength: 150
     })
-    @IsUrl()
+    @IsString() /// Cambiado IUrl
     @IsOptional()
     @MaxLength(150)
     web: string;
@@ -134,7 +134,7 @@ export class CreateInstitucionDTO{
         maxLength: 200
 
     })
-    @IsUrl()
+    @IsString() /// Cambiado IsUrl
     @IsOptional()
     @MaxLength(200)
     video: string;
@@ -156,8 +156,7 @@ export class CreateInstitucionDTO{
         nullable: false,
         maxLength: 255
     })
-    @IsString()
-    @IsEmail()
+    @IsString() /// Cambiado IsEmail
     @MaxLength(255)
     @MinLength(1)
     email1: string;
@@ -168,7 +167,7 @@ export class CreateInstitucionDTO{
         maxLength: 50
     })
     @IsOptional()
-    @IsEmail()
+    @IsString() /// Cambiado IsEmail
     @MaxLength(50)
     email2: string;
 
@@ -196,7 +195,7 @@ export class CreateInstitucionDTO{
     @ApiProperty({
         description: 'Red Social Twitter'
     })
-    @IsUrl()
+    @IsString() /// Cambiado IsUrl
     @MaxLength(200)
     @IsOptional()
     twitter: string;
@@ -204,7 +203,7 @@ export class CreateInstitucionDTO{
     @ApiProperty({
         description: 'Red Social Facebook'
     })
-    @IsUrl()
+    @IsString()  /// Cambiado IsString
     @MaxLength(200)
     @IsOptional()
     facebook: string;
@@ -223,6 +222,5 @@ export class CreateInstitucionDTO{
     })
     @IsOptional()
     @IsNumber()
-    @Min(1)  
     id_plantilla: number;
 }

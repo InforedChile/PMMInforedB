@@ -87,20 +87,20 @@ export class InstitucionService {
         //Correo
         if(dto.email1===dto.email2) throw new BadRequestException(['Correos electronicos deben ser distintos'])
 
-        /* Twitter */
-        if(dto.twitter){
-            if(!dto.twitter.includes('https://twitter.com/')) throw new BadRequestException('Link ingresado no es de twitter')
-        }
-        /* Facebook */
-        if(dto.facebook){ 
-            if(!dto.facebook.includes('https://www.facebook.com')) throw new BadRequestException('Link ingresado no es de facebook')
-        }
+        // /* Twitter */
+        // if(dto.twitter){
+        //     if(!dto.twitter.includes('https://twitter.com/')) throw new BadRequestException('Link ingresado no es de twitter')
+        // }
+        // /* Facebook */
+        // if(dto.facebook){ 
+        //     if(!dto.facebook.includes('https://www.facebook.com')) throw new BadRequestException('Link ingresado no es de facebook')
+        // }
         /* Organización */
         const org = await this.organizacionService.getOne(dto.id_organizacion);
         if(org.auth === BOOL.NO) throw new BadRequestException('Organización no está autorizada ');
         
         /* Plantilla */
-        if(dto.id_plantilla >= 0){
+        if(dto.id_plantilla > 0){
             const plan = await this.plantillaService.getOne(dto.id_plantilla)
             if(org.id_organizacion !== plan.id_organizacion) throw new BadRequestException('Plantilla no pertenece a la organización indicada')
         }

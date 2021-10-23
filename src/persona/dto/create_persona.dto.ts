@@ -84,7 +84,7 @@ export class CreatePersonaDTO{
         nullable: true,
         maxLength: 50
     })
-    @IsEmail()
+    @IsString()
     @IsOptional()
     @MaxLength(50)
     correo: string
