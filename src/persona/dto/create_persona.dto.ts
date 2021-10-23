@@ -37,7 +37,6 @@ export class CreatePersonaDTO{
     @IsString()
     @MaxLength(20)
     @MinLength(1)
-    @MinLength(1)
     rut: string
 
     @ApiProperty({
@@ -48,7 +47,6 @@ export class CreatePersonaDTO{
     @IsString()
     @IsOptional()
     @MaxLength(15)
-    @MinLength(1)
     departamento: string
 
     @ApiProperty({
@@ -59,7 +57,6 @@ export class CreatePersonaDTO{
     @IsString()
     @IsOptional()
     @MaxLength(20)
-    @MinLength(1)
     area: string
 
     @ApiProperty({
@@ -70,7 +67,6 @@ export class CreatePersonaDTO{
     @IsString()
     @IsOptional()
     @MaxLength(20)
-    @MinLength(1)
     sub_area: string
 
     @ApiProperty({
@@ -81,7 +77,6 @@ export class CreatePersonaDTO{
     @IsString()
     @IsOptional()
     @MaxLength(50)
-    @MinLength(1)
     direccion: string
 
     @ApiProperty({
@@ -92,7 +87,6 @@ export class CreatePersonaDTO{
     @IsEmail()
     @IsOptional()
     @MaxLength(50)
-    @MinLength(1)
     correo: string
 
     @ApiProperty({
@@ -104,7 +98,6 @@ export class CreatePersonaDTO{
     @IsString()
     @IsOptional()
     @MaxLength(20)
-    @MinLength(1)
     telefono: string
 
     @ApiProperty({
@@ -115,7 +108,6 @@ export class CreatePersonaDTO{
     @IsString()
     @IsOptional()
     @MaxLength(50)
-    @MinLength(1)
     cargo: string
 
     @ApiProperty({

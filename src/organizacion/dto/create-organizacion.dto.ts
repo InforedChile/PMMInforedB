@@ -21,7 +21,6 @@ export class CreateOrgDTO{
     @IsString()
     @MaxLength(200)
     @IsOptional()
-    @MinLength(1)
     ubicacion: string;
 
     @ApiProperty({
@@ -32,7 +31,6 @@ export class CreateOrgDTO{
     @IsString()
     @MaxLength(500)
     @IsOptional()
-    @MinLength(1)
     descripcion: string;
 
     @ApiProperty({
@@ -54,7 +52,6 @@ export class CreateOrgDTO{
     @IsEmail()
     @IsOptional()
     @MaxLength(50)
-    @MinLength(1)
     correo2: string;
 
     @ApiProperty({
@@ -75,7 +72,6 @@ export class CreateOrgDTO{
     @IsString()
     @MaxLength(50)
     @IsOptional()
-    @MinLength(1)
     telefono2: string;
 
     /* password: string */
