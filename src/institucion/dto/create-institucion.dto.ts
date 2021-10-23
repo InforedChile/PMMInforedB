@@ -50,7 +50,6 @@ export class CreateInstitucionDTO{
     @IsString()
     @IsOptional()
     @MaxLength(300)
-    @MinLength(1)
     tags: string;
 
     @ApiProperty({
@@ -61,7 +60,6 @@ export class CreateInstitucionDTO{
     @IsString()
     @IsOptional()
     @MaxLength(200)
-    @MinLength(1)
     direccion: string;
 
     @ApiProperty({
@@ -100,7 +98,6 @@ export class CreateInstitucionDTO{
     })
     @IsString()
     @IsOptional()
-    @MinLength(1)
     google_maps: string;
 
     @ApiProperty({
@@ -110,7 +107,6 @@ export class CreateInstitucionDTO{
     @IsString()
     @IsOptional()
     @MaxLength(50)
-    @MinLength(1)
     latitud: string;
 
     @ApiProperty({
@@ -120,7 +116,6 @@ export class CreateInstitucionDTO{
     @IsString()
     @IsOptional()
     @MaxLength(50)
-    @MinLength(1)
     longitud: string;
 
     @ApiProperty({
@@ -131,7 +126,6 @@ export class CreateInstitucionDTO{
     @IsUrl()
     @IsOptional()
     @MaxLength(150)
-    @MinLength(1)
     web: string;
 
     @ApiProperty({
@@ -143,7 +137,6 @@ export class CreateInstitucionDTO{
     @IsUrl()
     @IsOptional()
     @MaxLength(200)
-    @MinLength(1)
     video: string;
 
     @ApiProperty()
@@ -155,7 +148,6 @@ export class CreateInstitucionDTO{
     @ApiProperty()
     @IsOptional()
     @IsString()
-    @MinLength(1)
     @MaxLength(100)
     telefono2: string;
 
@@ -178,7 +170,6 @@ export class CreateInstitucionDTO{
     @IsOptional()
     @IsEmail()
     @MaxLength(50)
-    @MinLength(1)
     email2: string;
 
     @ApiProperty({
@@ -208,7 +199,6 @@ export class CreateInstitucionDTO{
     @IsUrl()
     @MaxLength(200)
     @IsOptional()
-    @MinLength(1)
     twitter: string;
 
     @ApiProperty({
@@ -217,7 +207,6 @@ export class CreateInstitucionDTO{
     @IsUrl()
     @MaxLength(200)
     @IsOptional()
-    @MinLength(1)
     facebook: string;
     
     @ApiProperty({
